@@ -1,4 +1,4 @@
-package com.idscanner;
+package com.toll_id_scanner;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

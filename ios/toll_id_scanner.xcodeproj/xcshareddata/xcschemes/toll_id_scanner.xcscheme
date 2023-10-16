@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "idscanner.app"
-               BlueprintName = "idscanner"
-               ReferencedContainer = "container:idscanner.xcodeproj">
+               BuildableName = "toll_id_scanner.app"
+               BlueprintName = "toll_id_scanner"
+               ReferencedContainer = "container:toll_id_scanner.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "idscannerTests.xctest"
-               BlueprintName = "idscannerTests"
-               ReferencedContainer = "container:idscanner.xcodeproj">
+               BuildableName = "toll_id_scannerTests.xctest"
+               BlueprintName = "toll_id_scannerTests"
+               ReferencedContainer = "container:toll_id_scanner.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "idscanner.app"
-            BlueprintName = "idscanner"
-            ReferencedContainer = "container:idscanner.xcodeproj">
+            BuildableName = "toll_id_scanner.app"
+            BlueprintName = "toll_id_scanner"
+            ReferencedContainer = "container:toll_id_scanner.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "idscanner.app"
-            BlueprintName = "idscanner"
-            ReferencedContainer = "container:idscanner.xcodeproj">
+            BuildableName = "toll_id_scanner.app"
+            BlueprintName = "toll_id_scanner"
+            ReferencedContainer = "container:toll_id_scanner.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

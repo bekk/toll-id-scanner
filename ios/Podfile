@@ -25,7 +25,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'idscanner' do
+target 'toll_id_scanner' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -45,7 +45,7 @@ target 'idscanner' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'idscannerTests' do
+  target 'toll_id_scannerTests' do
     inherit! :complete
     # Pods for testing
   end

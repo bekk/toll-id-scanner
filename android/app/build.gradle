@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.idscanner"
+    namespace "com.toll_id_scanner"
     defaultConfig {
-        applicationId "com.idscanner"
+        applicationId "com.toll_id_scanner"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
