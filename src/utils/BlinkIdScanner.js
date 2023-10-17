@@ -1,8 +1,3 @@
-import {
-  BlinkID,
-  RecognizerCollection,
-  BlinkIdOverlaySettings,
-} from 'blinkid-react-native';
 import {ANDROID_LICENSE_KEY, IOS_LICENSE_KEY} from '@env';
 import * as BlinkIDReactNative from 'blinkid-react-native';
 import {Platform} from 'react-native';
@@ -27,7 +22,6 @@ export async function scanId() {
     );
 
     if (scanningResults && scanningResults.length > 0) {
-      // Handle your results here
       console.log(scanningResults);
     }
   } catch (error) {

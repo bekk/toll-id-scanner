@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
-import {scanId} from '../utils/BlinkIdScanner'; // Adjust the import path as needed
-
+import {scanId} from '../utils/BlinkIdScanner';
 const ScannerPage = () => {
   const handleScan = async () => {
     try {
