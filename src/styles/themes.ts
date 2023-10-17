@@ -19,7 +19,7 @@ type Style = TextStyle | ViewStyle;
 interface Theme {
   colors: Record<string, string>;
   spacing: Record<string, number>;
-  textVariants: Record<string, Style>;
+  textVariants: Record<string, TextStyle>;
 }
 
 export const theme: Theme = {
