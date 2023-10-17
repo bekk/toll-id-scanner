@@ -7,7 +7,8 @@
 
 import React, {useContext} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
-import {theme} from './src/styles/themes.js';
+import {theme} from './src/styles/themes';
+import ScannerPage from './src/screens/ScannerPage';
 
 const ThemeContext = React.createContext(theme);
 
@@ -39,6 +40,7 @@ const ThemedComponent = () => {
         height: '100%',
       }}>
       <Text>Tolletaten Mobilapp</Text>
+      <ScannerPage />
     </View>
   );
 };
