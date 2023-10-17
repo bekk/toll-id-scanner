@@ -1,3 +1,5 @@
+import {TextStyle, ViewStyle} from 'react-native';
+
 const palette = {
   tollmorkebla: '#12404F',
   tollturkis: '#007682',
@@ -12,7 +14,15 @@ const palette = {
   lightgrey: '#f5f5f6',
 };
 
-export const theme = {
+type Style = TextStyle | ViewStyle;
+
+interface Theme {
+  colors: Record<string, string>;
+  spacing: Record<string, number>;
+  textVariants: Record<string, Style>;
+}
+
+export const theme: Theme = {
   colors: {
     background: palette.lightgrey,
     primary: palette.tollmorkebla,
@@ -35,11 +45,11 @@ export const theme = {
     body: {
       fontFamily: 'Roboto',
       fontSize: 16,
-      fontWeight: 'light',
+      fontWeight: '300',
     },
   },
 };
-/* 
+/*
 export const darkTheme = {
   ...theme,
   colors: {

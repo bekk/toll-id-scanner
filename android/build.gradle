@@ -13,6 +13,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        mavenLocal()
+        jcenter()
+        maven { url "https://maven.microblink.com" }
     }
     dependencies {
         classpath("com.android.tools.build:gradle")
