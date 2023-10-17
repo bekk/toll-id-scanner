@@ -9,7 +9,7 @@ import React, {useContext} from 'react';
 import {SafeAreaView, Text, View} from 'react-native';
 import {theme} from './src/styles/themes.js';
 
-const ThemeContext = React.createContext({});
+const ThemeContext = React.createContext(theme);
 
 const App = () => {
   return (
