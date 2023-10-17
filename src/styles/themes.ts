@@ -14,8 +14,6 @@ const palette = {
   lightgrey: '#f5f5f6',
 };
 
-type Style = TextStyle | ViewStyle;
-
 interface Theme {
   colors: Record<string, string>;
   spacing: Record<string, number>;
