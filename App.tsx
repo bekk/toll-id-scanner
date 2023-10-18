@@ -24,7 +24,7 @@ const MainComponent = () => {
   const themeFromContext = useContext(ThemeContext);
 
   return (
-    <View style={{backgroundColor: themeFromContext.colors.primary}}>
+    <View style={{backgroundColor: themeFromContext.colors.background}}>
       <SafeAreaView>
         <ThemedComponent />
       </SafeAreaView>
@@ -33,13 +33,23 @@ const MainComponent = () => {
 };
 
 const ThemedComponent = () => {
+  const themeFromContext = useContext(ThemeContext);
+
   return (
     <View
       style={{
         width: '100%',
         height: '100%',
       }}>
-      <Text>Tolletaten Mobilapp</Text>
+      <Text
+        style={{
+          color: themeFromContext.colors.primary,
+          fontSize: themeFromContext.textVariants.header.fontSize,
+          fontWeight: themeFromContext.textVariants.header.fontWeight,
+        }}>
+        Tolletaten Mobilapp
+      </Text>
+
       <ScannerPage />
     </View>
   );
