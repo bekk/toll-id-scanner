@@ -7,36 +7,13 @@ const licenseKey = Platform.select({
   android: ANDROID_LICENSE_KEY,
 });
 
-export async function scanId() {
+export async function scan() {
   try {
-    const idRecognizer = new BlinkIDReactNative.BlinkIdMultiSideRecognizer();
+    const idRecognizer = new BlinkIDReactNative.BlinkIdSingleSideRecognizer();
 
     const scanningResults = await BlinkIDReactNative.BlinkID.scanWithCamera(
-      new BlinkIDReactNative.BlinkIdOverlaySettings(),
+      {},
       new BlinkIDReactNative.RecognizerCollection([idRecognizer]),
-      licenseKey,
-    );
-
-    const isValid =
-      scanningResults[0].resultState ===
-      BlinkIDReactNative.RecognizerResultState.valid
-        ? scanningResults
-        : null;
-
-    return isValid;
-  } catch (error) {
-    console.error('Scanning failed', error);
-    return null;
-  }
-}
-
-export async function scanPassport() {
-  try {
-    const passportRecognizer = new BlinkIDReactNative.PassportRecognizer();
-
-    const scanningResults = await BlinkIDReactNative.BlinkID.scanWithCamera(
-      new BlinkIDReactNative.BlinkIdOverlaySettings(),
-      new BlinkIDReactNative.RecognizerCollection([passportRecognizer]),
       licenseKey,
     );
 
