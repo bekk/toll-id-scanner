@@ -26,7 +26,7 @@ const ScannerPage = () => {
         year: 2029,
       },
       documentCode: 'ID',
-      documentNumber: 'X98765432',
+      documentNumber: 'X9876542',
       documentType: 1,
       gender: 'M',
       immigrantCaseNumber: '9876543210',
@@ -102,14 +102,34 @@ const ScannerPage = () => {
               Scanning Results:
             </Text>
           </View>
+          <View
+            style={{
+              margin: themeFromContext.spacing.s,
+              alignItems: 'center',
+            }}>
+            <Text style={themeFromContext.textVariants.body}>Last Name:</Text>
+            <Text style={themeFromContext.textVariants.body}>
+              {scanningResults[0].mrzResult.primaryId}
+            </Text>
+          </View>
 
+          <View
+            style={{
+              margin: themeFromContext.spacing.s,
+              alignItems: 'center',
+            }}>
+            <Text style={themeFromContext.textVariants.body}>First Name:</Text>
+            <Text style={themeFromContext.textVariants.body}>
+              {scanningResults[0].mrzResult.secondaryId}
+            </Text>
+          </View>
           <View
             style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
             <Text style={themeFromContext.textVariants.body}>
               Document Number:
             </Text>
             <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].mrzResult.documentNumber}
+              {scanningResults[0].mrzResult.documentNumber.slice(0, 8)}
             </Text>
           </View>
 
@@ -136,6 +156,29 @@ const ScannerPage = () => {
             <Text style={themeFromContext.textVariants.body}>Nationality:</Text>
             <Text style={themeFromContext.textVariants.body}>
               {scanningResults[0].mrzResult.nationality}
+            </Text>
+          </View>
+          <View
+            style={{
+              margin: themeFromContext.spacing.s,
+              alignItems: 'center',
+            }}>
+            <Text style={themeFromContext.textVariants.body}>
+              Document Code:
+            </Text>
+            <Text style={themeFromContext.textVariants.body}>
+              {scanningResults[0].mrzResult.documentCode}
+            </Text>
+          </View>
+
+          <View
+            style={{
+              margin: themeFromContext.spacing.s,
+              alignItems: 'center',
+            }}>
+            <Text style={themeFromContext.textVariants.body}>Issuer:</Text>
+            <Text style={themeFromContext.textVariants.body}>
+              {scanningResults[0].mrzResult.issuer}
             </Text>
           </View>
         </View>
