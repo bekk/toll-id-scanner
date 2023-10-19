@@ -1,8 +1,10 @@
-import React, {useContext, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity, Button, Linking} from 'react-native';
 import {ThemeContext} from '../../App';
 import {scan} from '../utils/BlinkIdScanner';
 import ScanResultType from '../../types/scanResultType';
+import {postData} from '../services/postData';
+import {getFormId} from '../utils/getFormId';
 
 const ScannerPage = () => {
   const themeFromContext = useContext(ThemeContext);
@@ -22,6 +24,35 @@ const ScannerPage = () => {
       ? true
       : false;
 
+  const [formId, setFormId] = useState('1234');
+
+  const testData = {
+    data: {
+      name: 'John Doe',
+      email: 'JohnDoe@mail.com',
+      phone: '48191919',
+      address: '123 Main St',
+      country: 'Norway',
+    },
+    formId,
+  };
+
+  useEffect(() => {
+    const unsubscribe = Linking.addEventListener('url', getFormId(setFormId));
+
+    Linking.getInitialURL()
+      .then(url => {
+        if (url) {
+          getFormId(setFormId)({url});
+        }
+      })
+      .catch(err => console.error('An error occurred', err));
+
+    return () => {
+      unsubscribe.remove();
+    };
+  }, []);
+
   return (
     <View style={{backgroundColor: themeFromContext.colors.background}}>
       <View
@@ -37,6 +68,16 @@ const ScannerPage = () => {
               color: themeFromContext.buttonStyles.primaryButton.textColor,
             }}>
             Scan ID
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={themeFromContext.buttonStyles.primaryButton}
+          onPress={() => postData(testData)}>
+          <Text
+            style={{
+              color: themeFromContext.buttonStyles.primaryButton.textColor,
+            }}>
+            Post Data
           </Text>
         </TouchableOpacity>
       </View>
