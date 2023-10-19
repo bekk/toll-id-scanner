@@ -163,7 +163,7 @@ const ScannerPage = () => {
                   Document Type:
                 </Text>
                 <Text style={themeFromContext.textVariants.body}>
-                  {scanningResults[0].mrzResult.sanitizedDocumentCode}
+                  {scanningResults[0].mrzResult.sanitizedDocumentCode[0]}
                 </Text>
               </View>
 
