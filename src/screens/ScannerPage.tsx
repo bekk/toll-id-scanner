@@ -1,15 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  Button,
-  Touchable,
-  TouchableOpacity,
-  Linking,
-} from 'react-native';
+import {View, Text, TouchableOpacity, Linking} from 'react-native';
+import {Button} from 'react-native-paper';
 import {scanId, scanPassport} from '../utils/BlinkIdScanner';
 import {ThemeContext} from '../../App';
 import {getFormId} from '../utils/getFormId';
+import {postData} from '../services/postData';
 
 type ScanningResult = {
   mrzResult: {
@@ -56,7 +51,7 @@ const ScannerPage = () => {
     };
   }, []);
 
-  const themeFromContext = useContext(ThemeContext);
+  const {buttonVariants, textVariants, spacing} = useContext(ThemeContext);
 
   const [scanningResults, setScanningResults] = useState<
     ScanningResult[] | null
@@ -70,82 +65,83 @@ const ScannerPage = () => {
     const scanResult = await scanPassport();
     setScanningResults(scanResult);
   };
-  console.log(scanningResults);
 
   return (
-    <View style={{backgroundColor: themeFromContext.colors.background}}>
+    <View style={{backgroundColor: 'black'}}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-evenly',
         }}>
-        <TouchableOpacity
-          style={themeFromContext.buttonStyles.primaryButton}
-          onPress={handleScanId}>
-          <Text
-            style={{
-              color: themeFromContext.buttonStyles.primaryButton.textColor,
-            }}>
-            Scan ID
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={themeFromContext.buttonStyles.primaryButton}
-          onPress={handleScanPassport}>
-          <Text
-            style={{
-              color: themeFromContext.buttonStyles.primaryButton.textColor,
-            }}>
-            Scan Passport
-          </Text>
-        </TouchableOpacity>
+        <Button {...buttonVariants.primaryButton} onPress={handleScanId}>
+          Scan ID
+        </Button>
+        <Button {...buttonVariants.primaryButton} onPress={handleScanPassport}>
+          Scan Passport
+        </Button>
+      </View>
+      <View>
+        <Text
+          style={{
+            ...textVariants.secondaryHeader,
+            textAlign: 'center',
+          }}>
+          Form ID:
+        </Text>
+        <Text
+          style={{
+            ...textVariants.secondaryHeader,
+            textAlign: 'center',
+          }}>
+          {formId}
+        </Text>
       </View>
       {scanningResults && (
         <View
           style={{
-            margin: themeFromContext.spacing.xl,
+            margin: spacing.xl,
           }}>
-          <View
-            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
-            <Text style={themeFromContext.textVariants.secondaryHeader}>
-              Scanning Results:
-            </Text>
+          <View style={{margin: spacing.s, alignItems: 'center'}}>
+            <Text style={textVariants.secondaryHeader}>Scanning Results:</Text>
           </View>
-
-          <View
-            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
-            <Text style={themeFromContext.textVariants.body}>
-              Document Number:
-            </Text>
-            <Text style={themeFromContext.textVariants.body}>
+          <View style={{margin: spacing.s, alignItems: 'center'}}>
+            <Text style={textVariants.body}>Document Number:</Text>
+            <Text style={textVariants.body}>
               {scanningResults[0].mrzResult.documentNumber}
             </Text>
           </View>
-
-          <View
-            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
-            <Text style={themeFromContext.textVariants.body}>
-              Date of Birth:
-            </Text>
-            <Text style={themeFromContext.textVariants.body}>
+          <View style={{margin: spacing.s, alignItems: 'center'}}>
+            <Text style={textVariants.body}>Date of Birth:</Text>
+            <Text style={textVariants.body}>
               {`${scanningResults[0].mrzResult.dateOfBirth.day}/${scanningResults[0].mrzResult.dateOfBirth.month}/${scanningResults[0].mrzResult.dateOfBirth.year}`}
             </Text>
           </View>
-
-          <View
-            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
-            <Text style={themeFromContext.textVariants.body}>Gender:</Text>
-            <Text style={themeFromContext.textVariants.body}>
+          <View style={{margin: spacing.s, alignItems: 'center'}}>
+            <Text style={textVariants.body}>Gender:</Text>
+            <Text style={textVariants.body}>
               {scanningResults[0].mrzResult.gender}
             </Text>
           </View>
-
-          <View
-            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
-            <Text style={themeFromContext.textVariants.body}>Nationality:</Text>
-            <Text style={themeFromContext.textVariants.body}>
+          <View style={{margin: spacing.s, alignItems: 'center'}}>
+            <Text style={textVariants.body}>Nationality:</Text>
+            <Text style={textVariants.body}>
               {scanningResults[0].mrzResult.nationality}
             </Text>
+          </View>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
+            }}>
+            <Button
+              {...buttonVariants.primaryButton}
+              onPress={() => postData(scanningResults)}>
+              Confirm
+            </Button>
+            <Button {...buttonVariants.primaryButton} onPress={handleScanId}>
+              Scan Again
+            </Button>
           </View>
         </View>
       )}

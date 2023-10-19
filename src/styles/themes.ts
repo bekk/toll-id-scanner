@@ -1,4 +1,5 @@
-import {TextStyle} from 'react-native';
+import {Button, TextStyle, ViewStyle} from 'react-native';
+import {ButtonProps} from 'react-native-paper';
 
 const palette = {
   tollmorkebla: '#12404F',
@@ -14,17 +15,23 @@ const palette = {
   lightgrey: '#f5f5f6',
 };
 
-interface ButtonStyles {
-  backgroundColor: string;
-  textColor: string;
-  padding: number;
-  borderRadius: number;
-}
+// Define the type for text variants
+type TextVariants = {
+  header: TextStyle;
+  secondaryHeader: TextStyle;
+  body: TextStyle;
+};
+
+type ButtonVariants = {
+  primaryButton: Partial<ButtonProps>;
+  secondaryButton: Partial<ButtonProps>;
+};
+
 interface Theme {
   colors: Record<string, string>;
   spacing: Record<string, number>;
-  textVariants: Record<string, TextStyle>;
-  buttonStyles: Record<string, ButtonStyles>;
+  textVariants: TextVariants;
+  buttonVariants: ButtonVariants;
 }
 
 export const theme: Theme = {
@@ -58,18 +65,15 @@ export const theme: Theme = {
       fontWeight: '300',
     },
   },
-  buttonStyles: {
+  buttonVariants: {
     primaryButton: {
-      backgroundColor: palette.tollmorkebla, // Use your defined color from the palette
+      buttonColor: palette.tollmorkebla,
       textColor: 'white',
-      padding: 12, // Adjust padding as needed
-      borderRadius: 8, // Adjust border radius as needed
+      style: {width: 150},
     },
     secondaryButton: {
-      backgroundColor: 'white',
-      textColor: palette.tollturkis, // Use your defined color from the palette
-      padding: 12, // Adjust padding as needed
-      borderRadius: 8, // Adjust border radius as needed
+      buttonColor: 'white',
+      textColor: palette.tollturkis,
     },
   },
 };
