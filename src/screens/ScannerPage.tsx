@@ -1,67 +1,26 @@
 import React, {useContext, useState} from 'react';
-import {View, Text, Button, Touchable, TouchableOpacity} from 'react-native';
-import {scanId, scanPassport} from '../utils/BlinkIdScanner';
+import {View, Text, TouchableOpacity} from 'react-native';
 import {ThemeContext} from '../../App';
-import IdResultType from '../../types/idResultType';
-import PassportResultType from '../../types/passportResultType';
+import {scan} from '../utils/BlinkIdScanner';
+import ScanResultType from '../../types/scanResultType';
 
 const ScannerPage = () => {
   const themeFromContext = useContext(ThemeContext);
 
-  const initialDummyDataPassport = {
-    faceImage: null,
-    fullDocumentImage: null,
-    mrzResult: {
-      age: 30,
-      alienNumber: 'A1234567',
-      applicationReceiptNumber: '1234567890',
-      dateOfBirth: {
-        day: 1,
-        month: 2,
-        year: 2023,
-      },
-      dateOfExpiry: {
-        day: 1,
-        month: 2,
-        year: 2029,
-      },
-      documentCode: 'ID',
-      documentNumber: 'X9876542',
-      documentType: 1,
-      gender: 'M',
-      immigrantCaseNumber: '9876543210',
-      issuer: 'USA',
-      mrzParsed: true,
-      mrzText:
-        'IDUSAADAMS<<JOHN<ALLEN<<<<<<<<<<<<<<<<<<<<<\nX98765432792051981231281231X1234567890',
-      mrzVerified: true,
-      nationality: 'USA',
-      opt1: '82051981231281231X',
-      opt2: 'X1234567890',
-      primaryId: 'JOHN ALLEN',
-      sanitizedDocumentCode: 'ID',
-      sanitizedDocumentNumber: 'X98765432',
-      sanitizedIssuer: 'USA',
-      sanitizedNationality: 'USA',
-      sanitizedOpt1: '82051981231281231X',
-      sanitizedOpt2: 'X1234567890',
-      secondaryId: 'ADAMS',
-    },
-    resultState: 2,
-  };
   const [scanningResults, setScanningResults] = useState<
-    PassportResultType[] | null
-  >([initialDummyDataPassport]);
+    ScanResultType[] | null
+  >(null);
 
-  const handleScanId = async () => {
-    const scanResult = await scanId();
+  const handleScan = async () => {
+    const scanResult = await scan();
     setScanningResults(scanResult);
   };
-  const handleScanPassport = async () => {
-    const scanResult = await scanPassport();
-    setScanningResults(scanResult);
-  };
-  console.log(scanningResults);
+
+  const isPassport =
+    scanningResults &&
+    scanningResults[0].mrzResult.sanitizedDocumentCode[0] === 'P'
+      ? true
+      : false;
 
   return (
     <View style={{backgroundColor: themeFromContext.colors.background}}>
@@ -72,22 +31,12 @@ const ScannerPage = () => {
         }}>
         <TouchableOpacity
           style={themeFromContext.buttonStyles.primaryButton}
-          onPress={handleScanId}>
+          onPress={handleScan}>
           <Text
             style={{
               color: themeFromContext.buttonStyles.primaryButton.textColor,
             }}>
             Scan ID
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={themeFromContext.buttonStyles.primaryButton}
-          onPress={handleScanPassport}>
-          <Text
-            style={{
-              color: themeFromContext.buttonStyles.primaryButton.textColor,
-            }}>
-            Scan Passport
           </Text>
         </TouchableOpacity>
       </View>
@@ -109,7 +58,7 @@ const ScannerPage = () => {
             }}>
             <Text style={themeFromContext.textVariants.body}>Last Name:</Text>
             <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].mrzResult.primaryId}
+              {scanningResults[0].lastName.description}
             </Text>
           </View>
 
@@ -120,7 +69,7 @@ const ScannerPage = () => {
             }}>
             <Text style={themeFromContext.textVariants.body}>First Name:</Text>
             <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].mrzResult.secondaryId}
+              {scanningResults[0].firstName.description}
             </Text>
           </View>
           <View
@@ -129,7 +78,7 @@ const ScannerPage = () => {
               Document Number:
             </Text>
             <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].mrzResult.documentNumber.slice(0, 8)}
+              {scanningResults[0].documentNumber.description}
             </Text>
           </View>
 
@@ -139,7 +88,7 @@ const ScannerPage = () => {
               Date of Birth:
             </Text>
             <Text style={themeFromContext.textVariants.body}>
-              {`${scanningResults[0].mrzResult.dateOfBirth.day}/${scanningResults[0].mrzResult.dateOfBirth.month}/${scanningResults[0].mrzResult.dateOfBirth.year}`}
+              {`${scanningResults[0].dateOfBirth.day}/${scanningResults[0].dateOfBirth.month}/${scanningResults[0].dateOfBirth.year}`}
             </Text>
           </View>
 
@@ -147,40 +96,48 @@ const ScannerPage = () => {
             style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
             <Text style={themeFromContext.textVariants.body}>Gender:</Text>
             <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].mrzResult.gender}
+              {scanningResults[0].sex.description}
             </Text>
           </View>
+          {isPassport && (
+            <View>
+              <View
+                style={{
+                  margin: themeFromContext.spacing.s,
+                  alignItems: 'center',
+                }}>
+                <Text style={themeFromContext.textVariants.body}>
+                  Nationality:
+                </Text>
+                <Text style={themeFromContext.textVariants.body}>
+                  {scanningResults[0].nationality.description}
+                </Text>
+              </View>
+              <View
+                style={{
+                  margin: themeFromContext.spacing.s,
+                  alignItems: 'center',
+                }}>
+                <Text style={themeFromContext.textVariants.body}>
+                  Document Type:
+                </Text>
+                <Text style={themeFromContext.textVariants.body}>
+                  {scanningResults[0].mrzResult.sanitizedDocumentCode}
+                </Text>
+              </View>
 
-          <View
-            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
-            <Text style={themeFromContext.textVariants.body}>Nationality:</Text>
-            <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].mrzResult.nationality}
-            </Text>
-          </View>
-          <View
-            style={{
-              margin: themeFromContext.spacing.s,
-              alignItems: 'center',
-            }}>
-            <Text style={themeFromContext.textVariants.body}>
-              Document Code:
-            </Text>
-            <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].mrzResult.documentCode}
-            </Text>
-          </View>
-
-          <View
-            style={{
-              margin: themeFromContext.spacing.s,
-              alignItems: 'center',
-            }}>
-            <Text style={themeFromContext.textVariants.body}>Issuer:</Text>
-            <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].mrzResult.issuer}
-            </Text>
-          </View>
+              <View
+                style={{
+                  margin: themeFromContext.spacing.s,
+                  alignItems: 'center',
+                }}>
+                <Text style={themeFromContext.textVariants.body}>Issuer:</Text>
+                <Text style={themeFromContext.textVariants.body}>
+                  {scanningResults[0].mrzResult.issuer}
+                </Text>
+              </View>
+            </View>
+          )}
         </View>
       )}
     </View>
