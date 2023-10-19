@@ -2,41 +2,56 @@ import React, {useContext, useState} from 'react';
 import {View, Text, Button, Touchable, TouchableOpacity} from 'react-native';
 import {scanId, scanPassport} from '../utils/BlinkIdScanner';
 import {ThemeContext} from '../../App';
+import IdResultType from '../../types/idResultType';
+import PassportResultType from '../../types/passportResultType';
 
 const ScannerPage = () => {
   const themeFromContext = useContext(ThemeContext);
 
-  type ScanningResult = {
+  const initialDummyDataPassport = {
+    faceImage: null,
+    fullDocumentImage: null,
     mrzResult: {
-      documentNumber: string;
-      dateOfBirth: {
-        day: number;
-        month: number;
-        year: number;
-      };
-      gender: string;
-      nationality: string;
-      // Add other properties as needed
-    };
-    // Add other properties as needed
-  };
-
-  const initialDummyData = {
-    mrzResult: {
-      documentNumber: '123456',
+      age: 30,
+      alienNumber: 'A1234567',
+      applicationReceiptNumber: '1234567890',
       dateOfBirth: {
         day: 1,
-        month: 1,
-        year: 2000,
+        month: 2,
+        year: 2023,
       },
+      dateOfExpiry: {
+        day: 1,
+        month: 2,
+        year: 2029,
+      },
+      documentCode: 'ID',
+      documentNumber: 'X98765432',
+      documentType: 1,
       gender: 'M',
+      immigrantCaseNumber: '9876543210',
+      issuer: 'USA',
+      mrzParsed: true,
+      mrzText:
+        'IDUSAADAMS<<JOHN<ALLEN<<<<<<<<<<<<<<<<<<<<<\nX98765432792051981231281231X1234567890',
+      mrzVerified: true,
       nationality: 'USA',
+      opt1: '82051981231281231X',
+      opt2: 'X1234567890',
+      primaryId: 'JOHN ALLEN',
+      sanitizedDocumentCode: 'ID',
+      sanitizedDocumentNumber: 'X98765432',
+      sanitizedIssuer: 'USA',
+      sanitizedNationality: 'USA',
+      sanitizedOpt1: '82051981231281231X',
+      sanitizedOpt2: 'X1234567890',
+      secondaryId: 'ADAMS',
     },
-    // Add other properties as needed
+    resultState: 2,
   };
   const [scanningResults, setScanningResults] = useState<
-    ScanningResult[] | null
-  >([initialDummyData]);
+    PassportResultType[] | null
+  >([initialDummyDataPassport]);
 
   const handleScanId = async () => {
     const scanResult = await scanId();
