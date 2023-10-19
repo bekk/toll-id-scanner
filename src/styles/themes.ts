@@ -1,4 +1,4 @@
-import {TextStyle, ViewStyle} from 'react-native';
+import {TextStyle} from 'react-native';
 
 const palette = {
   tollmorkebla: '#12404F',
@@ -14,10 +14,17 @@ const palette = {
   lightgrey: '#f5f5f6',
 };
 
+interface ButtonStyles {
+  backgroundColor: string;
+  textColor: string;
+  padding: number;
+  borderRadius: number;
+}
 interface Theme {
   colors: Record<string, string>;
   spacing: Record<string, number>;
   textVariants: Record<string, TextStyle>;
+  buttonStyles: Record<string, ButtonStyles>;
 }
 
 export const theme: Theme = {
@@ -40,10 +47,29 @@ export const theme: Theme = {
       fontSize: 36,
       fontWeight: 'bold',
     },
+    secondaryHeader: {
+      fontFamily: 'Roboto',
+      fontSize: 24,
+      fontWeight: 'normal',
+    },
     body: {
       fontFamily: 'Roboto',
       fontSize: 16,
       fontWeight: '300',
+    },
+  },
+  buttonStyles: {
+    primaryButton: {
+      backgroundColor: palette.tollmorkebla, // Use your defined color from the palette
+      textColor: 'white',
+      padding: 12, // Adjust padding as needed
+      borderRadius: 8, // Adjust border radius as needed
+    },
+    secondaryButton: {
+      backgroundColor: 'white',
+      textColor: palette.tollturkis, // Use your defined color from the palette
+      padding: 12, // Adjust padding as needed
+      borderRadius: 8, // Adjust border radius as needed
     },
   },
 };

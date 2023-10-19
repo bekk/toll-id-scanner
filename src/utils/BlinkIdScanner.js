@@ -10,7 +10,6 @@ const licenseKey = Platform.select({
 export async function scanId() {
   try {
     const idRecognizer = new BlinkIDReactNative.BlinkIdMultiSideRecognizer();
-    const passportRecognizer = new BlinkIDReactNative.PassportRecognizer();
 
     const scanningResults = await BlinkIDReactNative.BlinkID.scanWithCamera(
       new BlinkIDReactNative.BlinkIdOverlaySettings(),
@@ -18,9 +17,16 @@ export async function scanId() {
       licenseKey,
     );
 
-    console.log('scanningResults', scanningResults);
+    const isValid =
+      scanningResults[0].resultState ===
+      BlinkIDReactNative.RecognizerResultState.valid
+        ? scanningResults
+        : null;
+
+    return isValid;
   } catch (error) {
     console.error('Scanning failed', error);
+    return null;
   }
 }
 
@@ -33,8 +39,16 @@ export async function scanPassport() {
       new BlinkIDReactNative.RecognizerCollection([passportRecognizer]),
       licenseKey,
     );
-    console.log('scanningResults', scanningResults);
+
+    const isValid =
+      scanningResults[0].resultState ===
+      BlinkIDReactNative.RecognizerResultState.valid
+        ? scanningResults
+        : null;
+
+    return isValid;
   } catch (error) {
     console.error('Scanning failed', error);
+    return null;
   }
 }

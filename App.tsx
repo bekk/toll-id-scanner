@@ -10,7 +10,7 @@ import {SafeAreaView, Text, View} from 'react-native';
 import {theme} from './src/styles/themes';
 import ScannerPage from './src/screens/ScannerPage';
 
-const ThemeContext = React.createContext(theme);
+export const ThemeContext = React.createContext(theme);
 
 const App = () => {
   return (
@@ -24,7 +24,10 @@ const MainComponent = () => {
   const themeFromContext = useContext(ThemeContext);
 
   return (
-    <View style={{backgroundColor: themeFromContext.colors.background}}>
+    <View
+      style={{
+        backgroundColor: themeFromContext.colors.background,
+      }}>
       <SafeAreaView>
         <ThemedComponent />
       </SafeAreaView>
@@ -43,9 +46,11 @@ const ThemedComponent = () => {
       }}>
       <Text
         style={{
-          color: themeFromContext.colors.primary,
+          margin: themeFromContext.spacing.s,
+          textAlign: 'center',
           fontSize: themeFromContext.textVariants.header.fontSize,
           fontWeight: themeFromContext.textVariants.header.fontWeight,
+          color: themeFromContext.textVariants.header.color,
         }}>
         Tolletaten Mobilapp
       </Text>
