@@ -8,23 +8,47 @@ const licenseKey = Platform.select({
 });
 
 export async function scanId() {
-  console.log(licenseKey);
   try {
-    const blinkIdMultiSideRecognizer =
-      new BlinkIDReactNative.BlinkIdMultiSideRecognizer();
-    blinkIdMultiSideRecognizer.returnFullDocumentImage = true;
-    blinkIdMultiSideRecognizer.returnFaceImage = true;
+    const idRecognizer = new BlinkIDReactNative.BlinkIdMultiSideRecognizer();
 
     const scanningResults = await BlinkIDReactNative.BlinkID.scanWithCamera(
       new BlinkIDReactNative.BlinkIdOverlaySettings(),
-      new BlinkIDReactNative.RecognizerCollection([blinkIdMultiSideRecognizer]),
+      new BlinkIDReactNative.RecognizerCollection([idRecognizer]),
       licenseKey,
     );
 
-    if (scanningResults && scanningResults.length > 0) {
-      console.log(scanningResults);
-    }
+    const isValid =
+      scanningResults[0].resultState ===
+      BlinkIDReactNative.RecognizerResultState.valid
+        ? scanningResults
+        : null;
+
+    return isValid;
   } catch (error) {
     console.error('Scanning failed', error);
+    return null;
+  }
+}
+
+export async function scanPassport() {
+  try {
+    const passportRecognizer = new BlinkIDReactNative.PassportRecognizer();
+
+    const scanningResults = await BlinkIDReactNative.BlinkID.scanWithCamera(
+      new BlinkIDReactNative.BlinkIdOverlaySettings(),
+      new BlinkIDReactNative.RecognizerCollection([passportRecognizer]),
+      licenseKey,
+    );
+
+    const isValid =
+      scanningResults[0].resultState ===
+      BlinkIDReactNative.RecognizerResultState.valid
+        ? scanningResults
+        : null;
+
+    return isValid;
+  } catch (error) {
+    console.error('Scanning failed', error);
+    return null;
   }
 }

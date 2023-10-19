@@ -1,22 +1,44 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, Button, Linking} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  Button,
+  Touchable,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
+import {scanId, scanPassport} from '../utils/BlinkIdScanner';
+import {ThemeContext} from '../../App';
 import {getFormId} from '../utils/getFormId';
-import {handleScan} from '../utils/handleScan';
-import {postData} from '../services/postData';
+
+type ScanningResult = {
+  mrzResult: {
+    documentNumber: string;
+    dateOfBirth: {
+      day: number;
+      month: number;
+      year: number;
+    };
+    gender: string;
+    nationality: string;
+  };
+};
+
+const initialDummyData = {
+  mrzResult: {
+    documentNumber: '123456',
+    dateOfBirth: {
+      day: 1,
+      month: 1,
+      year: 2000,
+    },
+    gender: 'M',
+    nationality: 'USA',
+  },
+};
 
 const ScannerPage = () => {
-  const [formId, setFormId] = useState('1234');
-
-  const testData = {
-    data: {
-      name: 'John Doe',
-      email: 'JohnDoe@mail.com',
-      phone: '48191919',
-      address: '123 Main St',
-      country: 'Norway',
-    },
-    formId,
-  };
+  const [formId, setFormId] = useState('');
 
   useEffect(() => {
     const unsubscribe = Linking.addEventListener('url', getFormId(setFormId));
@@ -34,12 +56,99 @@ const ScannerPage = () => {
     };
   }, []);
 
+  const themeFromContext = useContext(ThemeContext);
+
+  const [scanningResults, setScanningResults] = useState<
+    ScanningResult[] | null
+  >([initialDummyData]);
+
+  const handleScanId = async () => {
+    const scanResult = await scanId();
+    setScanningResults(scanResult);
+  };
+  const handleScanPassport = async () => {
+    const scanResult = await scanPassport();
+    setScanningResults(scanResult);
+  };
+  console.log(scanningResults);
+
   return (
-    <View>
-      <Text>Scanner Page FormId: {formId}</Text>
-      <Button title="Scan ID" onPress={handleScan} />
-      <View style={{height: 40}} />
-      <Button title="Post Data" onPress={() => postData(testData)} />
+    <View style={{backgroundColor: themeFromContext.colors.background}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+        }}>
+        <TouchableOpacity
+          style={themeFromContext.buttonStyles.primaryButton}
+          onPress={handleScanId}>
+          <Text
+            style={{
+              color: themeFromContext.buttonStyles.primaryButton.textColor,
+            }}>
+            Scan ID
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={themeFromContext.buttonStyles.primaryButton}
+          onPress={handleScanPassport}>
+          <Text
+            style={{
+              color: themeFromContext.buttonStyles.primaryButton.textColor,
+            }}>
+            Scan Passport
+          </Text>
+        </TouchableOpacity>
+      </View>
+      {scanningResults && (
+        <View
+          style={{
+            margin: themeFromContext.spacing.xl,
+          }}>
+          <View
+            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
+            <Text style={themeFromContext.textVariants.secondaryHeader}>
+              Scanning Results:
+            </Text>
+          </View>
+
+          <View
+            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
+            <Text style={themeFromContext.textVariants.body}>
+              Document Number:
+            </Text>
+            <Text style={themeFromContext.textVariants.body}>
+              {scanningResults[0].mrzResult.documentNumber}
+            </Text>
+          </View>
+
+          <View
+            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
+            <Text style={themeFromContext.textVariants.body}>
+              Date of Birth:
+            </Text>
+            <Text style={themeFromContext.textVariants.body}>
+              {`${scanningResults[0].mrzResult.dateOfBirth.day}/${scanningResults[0].mrzResult.dateOfBirth.month}/${scanningResults[0].mrzResult.dateOfBirth.year}`}
+            </Text>
+          </View>
+
+          <View
+            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
+            <Text style={themeFromContext.textVariants.body}>Gender:</Text>
+            <Text style={themeFromContext.textVariants.body}>
+              {scanningResults[0].mrzResult.gender}
+            </Text>
+          </View>
+
+          <View
+            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
+            <Text style={themeFromContext.textVariants.body}>Nationality:</Text>
+            <Text style={themeFromContext.textVariants.body}>
+              {scanningResults[0].mrzResult.nationality}
+            </Text>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
