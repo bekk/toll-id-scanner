@@ -1,4 +1,4 @@
-import {BackHandler} from 'react-native';
+import {BackHandler, Linking, Platform} from 'react-native';
 import {TestData} from '../../types/testData';
 
 export const postData = async (testData: TestData): Promise<void> => {
@@ -10,7 +10,11 @@ export const postData = async (testData: TestData): Promise<void> => {
       },
       body: JSON.stringify(testData),
     }).then(response => console.log(response));
-    BackHandler.exitApp();
+    if (Platform.OS === 'android') {
+      BackHandler.exitApp();
+    } else {
+      Linking.openURL('googlechrome://');
+    }
   } catch (error) {
     console.error('Posting failed:', error);
   }
