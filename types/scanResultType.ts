@@ -1,4 +1,4 @@
-interface ScanResultType {
+export interface ScanResultType {
   formId: string;
   data: {
     additionalAddressInformation: any;
@@ -193,5 +193,3 @@ interface ScanResultType {
     };
   };
 }
-
-export default ScanResultType;
