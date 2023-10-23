@@ -1,20 +1,69 @@
-/* Enlarge elements for mobile view */
+/* Base styles (Mobile-first) */
 body {
   font-size: 24px;
   background-color: bisque;
-}
-
-input[type='text'],
-input[type='email'],
-input[type='button'] {
-  font-size: 24px;
-  padding: 10px;
-}
-
-label {
-  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* You can choose any other font-family if you prefer */
 }
 
 form {
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+label,
+input[type='tel'],
+input[type='date'] {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='tel'],
+input[type='date'],
+input[type='button'] {
+  font-size: 24px;
+  padding: 10px 15px; /* Added a bit more padding for touch-friendly interactions */
+  width: 100%; /* Form elements take the full width */
+  box-sizing: border-box; /* Ensure padding doesn't increase element width */
+}
+
+input[type='button'] {
+  background-color: #4caf50; /* A green shade for the button */
+  color: white; /* Text color for the button */
+  border: none; /* Removing default borders */
+  cursor: pointer; /* Hand cursor on hover */
+  border-radius: 5px; /* Rounded corners */
+}
+
+input[type='button']:hover {
+  background-color: #45a049; /* Slightly darker shade on hover */
+}
+
+/* Adjustments for larger screens */
+@media (min-width: 768px) {
+  /* Tablet and above */
+  body {
+    font-size: 20px;
+  }
+
+  label,
+  input[type='tel'],
+  input[type='date'] {
+    margin-bottom: 15px;
+  }
+
+  input[type='text'],
+  input[type='email'],
+  input[type='tel'],
+  input[type='date'],
+  input[type='button'] {
+    font-size: 20px;
+    padding: 8px 12px;
+    width: 60%; /* Form elements take 60% width on larger screens */
+    margin: 0 auto; /* Centering form elements */
+  }
 }

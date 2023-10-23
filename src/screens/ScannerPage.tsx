@@ -67,6 +67,7 @@ const ScannerPage = () => {
         )
       ) : (
         <View>
+          <Text {...textVariants?.secondaryHeader}>FormId: {formId}</Text>
           <DataSummary scanningResults={scanningResults} />
           <View style={centeredContainer}>
             <Button
