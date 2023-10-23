@@ -38,7 +38,9 @@ const ScannerPage = () => {
       unsubscribe.remove();
     };
   }, []);
+
   useEffect(() => {
+    !formId && setScanningResults(null);
     if (formId && !scanningResults) {
       handleScan();
     }
@@ -70,7 +72,7 @@ const ScannerPage = () => {
             <Button
               {...buttonVariants?.primaryButton}
               onPress={() =>
-                postData(scanningResults).then(() => setScanningResults(null))
+                postData(scanningResults).then(() => setFormId(''))
               }>
               Confirm
             </Button>
