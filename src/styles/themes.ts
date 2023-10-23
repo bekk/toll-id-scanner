@@ -1,4 +1,40 @@
-import {TextStyle} from 'react-native';
+import {ViewStyle, TextProps} from 'react-native';
+import {ButtonProps} from 'react-native-paper';
+
+type Colors = {
+  background: string;
+  primary: string;
+  secondary: string;
+  danger: string;
+  failure: string;
+  success: string;
+};
+
+type DataSummaryStyles = {
+  container: ViewStyle;
+  infoContainer: ViewStyle;
+};
+
+type TextVariants = {
+  header: TextProps;
+  secondaryHeader: TextProps;
+  tertiaryHeader: TextProps;
+  body: TextProps;
+};
+
+type ButtonVariants = {
+  primaryButton: Partial<ButtonProps>;
+  secondaryButton: Partial<ButtonProps>;
+};
+
+interface Theme {
+  colors: Colors;
+  spacing: Record<string, number>;
+  centeredContainer?: Partial<ViewStyle>;
+  textVariants?: TextVariants;
+  buttonVariants?: ButtonVariants;
+  dataSummaryStyles?: DataSummaryStyles;
+}
 
 const palette = {
   tollmorkebla: '#12404F',
@@ -12,20 +48,68 @@ const palette = {
   marinebla: '#0054A6',
   purpur: '#942977',
   lightgrey: '#f5f5f6',
+  success: '#5cb85c', // Not official, but need success color
 };
 
-interface ButtonStyles {
-  backgroundColor: string;
-  textColor: string;
-  padding: number;
-  borderRadius: number;
-}
-interface Theme {
-  colors: Record<string, string>;
-  spacing: Record<string, number>;
-  textVariants: Record<string, TextStyle>;
-  buttonStyles: Record<string, ButtonStyles>;
-}
+const spacing = {
+  s: 8,
+  m: 16,
+  l: 24,
+  xl: 40,
+};
+
+const textVariants: TextVariants = {
+  header: {
+    style: {
+      fontFamily: 'Roboto',
+      fontSize: 32,
+      fontWeight: 'bold',
+      color: palette.tollmorkebla,
+    },
+  },
+  secondaryHeader: {
+    style: {
+      fontFamily: 'Roboto',
+      fontSize: 24,
+      fontWeight: 'normal',
+      textAlign: 'center',
+      color: palette.tollmorkebla,
+    },
+  },
+  tertiaryHeader: {
+    style: {
+      fontFamily: 'Roboto',
+      fontSize: 20,
+      fontWeight: 'normal',
+      color: palette.tollmorkebla,
+    },
+  },
+  body: {
+    style: {
+      fontFamily: 'Roboto',
+      fontSize: 16,
+      fontWeight: '300',
+      color: palette.tollmorkebla,
+    },
+  },
+};
+
+const buttonVariants: ButtonVariants = {
+  primaryButton: {
+    buttonColor: palette.tollmorkebla,
+    textColor: 'white',
+    style: {width: 150},
+  },
+  secondaryButton: {
+    buttonColor: 'white',
+    textColor: palette.tollturkis,
+  },
+};
+const centeredContainer: ViewStyle = {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-evenly',
+};
 
 export const theme: Theme = {
   colors: {
@@ -34,52 +118,20 @@ export const theme: Theme = {
     secondary: palette.tollturkis,
     danger: palette.tollgul,
     failure: palette.tolloransje,
+    success: palette.success,
   },
-  spacing: {
-    s: 8,
-    m: 16,
-    l: 24,
-    xl: 40,
-  },
-  textVariants: {
-    header: {
-      fontFamily: 'Roboto',
-      fontSize: 36,
-      fontWeight: 'bold',
+  spacing,
+  centeredContainer,
+  textVariants,
+  buttonVariants,
+  dataSummaryStyles: {
+    container: {
+      margin: spacing.xl,
+      ...centeredContainer,
     },
-    secondaryHeader: {
-      fontFamily: 'Roboto',
-      fontSize: 24,
-      fontWeight: 'normal',
-    },
-    body: {
-      fontFamily: 'Roboto',
-      fontSize: 16,
-      fontWeight: '300',
-    },
-  },
-  buttonStyles: {
-    primaryButton: {
-      backgroundColor: palette.tollmorkebla, // Use your defined color from the palette
-      textColor: 'white',
-      padding: 12, // Adjust padding as needed
-      borderRadius: 8, // Adjust border radius as needed
-    },
-    secondaryButton: {
-      backgroundColor: 'white',
-      textColor: palette.tollturkis, // Use your defined color from the palette
-      padding: 12, // Adjust padding as needed
-      borderRadius: 8, // Adjust border radius as needed
+    infoContainer: {
+      margin: spacing.s,
+      ...centeredContainer,
     },
   },
 };
-/*
-export const darkTheme = {
-  ...theme,
-  colors: {
-    ...theme.colors,
-    background: palette.black,
-    foreground: palette.white,
-  },
-};
- */

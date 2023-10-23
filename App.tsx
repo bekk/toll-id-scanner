@@ -6,9 +6,10 @@
  */
 
 import React, {useContext} from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {theme} from './src/styles/themes';
 import ScannerPage from './src/screens/ScannerPage';
+import Header from './src/components/UI/Header';
 
 export const ThemeContext = React.createContext(theme);
 
@@ -21,12 +22,13 @@ const App = () => {
 };
 
 const MainComponent = () => {
-  const themeFromContext = useContext(ThemeContext);
+  const {colors} = useContext(ThemeContext);
 
   return (
     <View
       style={{
-        backgroundColor: themeFromContext.colors.background,
+        backgroundColor: colors.background,
+        height: '100%',
       }}>
       <SafeAreaView>
         <ThemedComponent />
@@ -35,29 +37,11 @@ const MainComponent = () => {
   );
 };
 
-const ThemedComponent = () => {
-  const themeFromContext = useContext(ThemeContext);
-
-  return (
-    <View
-      style={{
-        width: '100%',
-        height: '100%',
-      }}>
-      <Text
-        style={{
-          margin: themeFromContext.spacing.s,
-          textAlign: 'center',
-          fontSize: themeFromContext.textVariants.header.fontSize,
-          fontWeight: themeFromContext.textVariants.header.fontWeight,
-          color: themeFromContext.textVariants.header.color,
-        }}>
-        Tolletaten Mobilapp
-      </Text>
-
-      <ScannerPage />
-    </View>
-  );
-};
+const ThemedComponent = () => (
+  <View>
+    <Header />
+    <ScannerPage />
+  </View>
+);
 
 export default App;

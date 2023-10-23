@@ -1,41 +1,27 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, TouchableOpacity, Button, Linking} from 'react-native';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {View, Linking} from 'react-native';
+import {Button, Text} from 'react-native-paper';
 import {ThemeContext} from '../../App';
-import {scan} from '../utils/BlinkIdScanner';
-import ScanResultType from '../../types/scanResultType';
-import {postData} from '../services/postData';
-import {getFormId} from '../utils/getFormId';
+import {getFormId} from '@utils/getFormId';
+import {scan} from '@utils/BlinkIdScanner';
+
+import {postData} from '@services/postData';
+import DataSummary from '@components/UI/DataSummary';
+import {ScanResultType} from '@typedefs/scanResultType';
 
 const ScannerPage = () => {
-  const themeFromContext = useContext(ThemeContext);
+  const {buttonVariants, textVariants, centeredContainer, colors} =
+    useContext(ThemeContext);
 
-  const [scanningResults, setScanningResults] = useState<
-    ScanResultType[] | null
-  >(null);
+  const [scanningResults, setScanningResults] = useState<ScanResultType | null>(
+    null,
+  );
+  const [formId, setFormId] = useState('');
 
-  const handleScan = async () => {
+  const handleScan = useCallback(async () => {
     const scanResult = await scan();
-    setScanningResults(scanResult);
-  };
-
-  const isPassport =
-    scanningResults &&
-    scanningResults[0].mrzResult.sanitizedDocumentCode[0] === 'P'
-      ? true
-      : false;
-
-  const [formId, setFormId] = useState('1234');
-
-  const testData = {
-    data: {
-      name: 'John Doe',
-      email: 'JohnDoe@mail.com',
-      phone: '48191919',
-      address: '123 Main St',
-      country: 'Norway',
-    },
-    formId,
-  };
+    setScanningResults({formId: formId, data: scanResult[0]});
+  }, [formId]);
 
   useEffect(() => {
     const unsubscribe = Linking.addEventListener('url', getFormId(setFormId));
@@ -53,132 +39,51 @@ const ScannerPage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    !formId && setScanningResults(null);
+    if (formId && !scanningResults) {
+      handleScan();
+    }
+  }, [formId, handleScan, scanningResults]);
+
   return (
-    <View style={{backgroundColor: themeFromContext.colors.background}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-        }}>
-        <TouchableOpacity
-          style={themeFromContext.buttonStyles.primaryButton}
-          onPress={handleScan}>
-          <Text
-            style={{
-              color: themeFromContext.buttonStyles.primaryButton.textColor,
-            }}>
-            Scan ID
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={themeFromContext.buttonStyles.primaryButton}
-          onPress={() => postData(testData)}>
-          <Text
-            style={{
-              color: themeFromContext.buttonStyles.primaryButton.textColor,
-            }}>
-            Post Data
-          </Text>
-        </TouchableOpacity>
-      </View>
-      {scanningResults && (
-        <View
-          style={{
-            margin: themeFromContext.spacing.xl,
-          }}>
-          <View
-            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
-            <Text style={themeFromContext.textVariants.secondaryHeader}>
-              Scanning Results:
-            </Text>
-          </View>
-          <View
-            style={{
-              margin: themeFromContext.spacing.s,
-              alignItems: 'center',
-            }}>
-            <Text style={themeFromContext.textVariants.body}>Last Name:</Text>
-            <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].lastName.description}
-            </Text>
-          </View>
-
-          <View
-            style={{
-              margin: themeFromContext.spacing.s,
-              alignItems: 'center',
-            }}>
-            <Text style={themeFromContext.textVariants.body}>First Name:</Text>
-            <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].firstName.description}
-            </Text>
-          </View>
-          <View
-            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
-            <Text style={themeFromContext.textVariants.body}>
-              Document Number:
-            </Text>
-            <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].documentNumber.description}
-            </Text>
-          </View>
-
-          <View
-            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
-            <Text style={themeFromContext.textVariants.body}>
-              Date of Birth:
-            </Text>
-            <Text style={themeFromContext.textVariants.body}>
-              {`${scanningResults[0].dateOfBirth.day}/${scanningResults[0].dateOfBirth.month}/${scanningResults[0].dateOfBirth.year}`}
-            </Text>
-          </View>
-
-          <View
-            style={{margin: themeFromContext.spacing.s, alignItems: 'center'}}>
-            <Text style={themeFromContext.textVariants.body}>Gender:</Text>
-            <Text style={themeFromContext.textVariants.body}>
-              {scanningResults[0].sex.description}
-            </Text>
-          </View>
-          {isPassport && (
-            <View>
-              <View
-                style={{
-                  margin: themeFromContext.spacing.s,
-                  alignItems: 'center',
-                }}>
-                <Text style={themeFromContext.textVariants.body}>
-                  Nationality:
-                </Text>
-                <Text style={themeFromContext.textVariants.body}>
-                  {scanningResults[0].nationality.description}
-                </Text>
-              </View>
-              <View
-                style={{
-                  margin: themeFromContext.spacing.s,
-                  alignItems: 'center',
-                }}>
-                <Text style={themeFromContext.textVariants.body}>
-                  Document Type:
-                </Text>
-                <Text style={themeFromContext.textVariants.body}>
-                  {scanningResults[0].mrzResult.sanitizedDocumentCode[0]}
-                </Text>
-              </View>
-
-              <View
-                style={{
-                  margin: themeFromContext.spacing.s,
-                  alignItems: 'center',
-                }}>
-                <Text style={themeFromContext.textVariants.body}>Issuer:</Text>
-                <Text style={themeFromContext.textVariants.body}>
-                  {scanningResults[0].mrzResult.issuer}
-                </Text>
-              </View>
+    <View style={{backgroundColor: colors.background}}>
+      {!scanningResults ? (
+        formId ? (
+          <>
+            <Text {...textVariants?.secondaryHeader}>FormId: </Text>
+            <Text {...textVariants?.secondaryHeader}>{formId}</Text>
+            <View style={centeredContainer}>
+              <Button {...buttonVariants?.primaryButton} onPress={handleScan}>
+                Scan ID
+              </Button>
             </View>
-          )}
+          </>
+        ) : (
+          <Text {...textVariants?.body} style={{marginHorizontal: 30}}>
+            Can't find formId. Open the app using the "scan ID" button in the
+            form to start scanning documents.
+          </Text>
+        )
+      ) : (
+        <View>
+          <DataSummary scanningResults={scanningResults} />
+          <View style={centeredContainer}>
+            <Button
+              {...buttonVariants?.primaryButton}
+              buttonColor={colors.success}
+              onPress={() =>
+                postData(scanningResults).then(() => setFormId(''))
+              }>
+              Confirm
+            </Button>
+            <Button
+              {...buttonVariants?.primaryButton}
+              buttonColor={colors.failure}
+              onPress={handleScan}>
+              Scan Again
+            </Button>
+          </View>
         </View>
       )}
     </View>

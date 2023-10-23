@@ -12,7 +12,7 @@ export async function scan() {
     const idRecognizer = new BlinkIDReactNative.BlinkIdSingleSideRecognizer();
 
     const scanningResults = await BlinkIDReactNative.BlinkID.scanWithCamera(
-      new BlinkIDReactNative.BlinkIdOverlaySettings(),
+      new BlinkIDReactNative.DocumentOverlaySettings(),
       new BlinkIDReactNative.RecognizerCollection([idRecognizer]),
       licenseKey,
     );
