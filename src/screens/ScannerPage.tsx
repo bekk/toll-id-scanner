@@ -71,12 +71,16 @@ const ScannerPage = () => {
           <View style={centeredContainer}>
             <Button
               {...buttonVariants?.primaryButton}
+              buttonColor={colors.success}
               onPress={() =>
                 postData(scanningResults).then(() => setFormId(''))
               }>
               Confirm
             </Button>
-            <Button {...buttonVariants?.primaryButton} onPress={handleScan}>
+            <Button
+              {...buttonVariants?.primaryButton}
+              buttonColor={colors.failure}
+              onPress={handleScan}>
               Scan Again
             </Button>
           </View>
