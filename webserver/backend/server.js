@@ -2,13 +2,29 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
+const https = require('https');
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
 
+// Load your key and certificate
+const privateKey = fs.readFileSync('path_to_private_key.pem', 'utf8');
+const certificate = fs.readFileSync('path_to_certificate.pem', 'utf8');
+const ca = fs.readFileSync('path_to_ca.pem', 'utf8');
+
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca,
+};
+
+const httpsServer = https.createServer(credentials, app);
+
 let formData = {};
 
-const wss = new WebSocket.Server({port: 8083});
+// Attach WebSocket Server to your HTTPS server
+const wss = new WebSocket.Server({server: httpsServer});
 
 wss.on('connection', ws => {
   ws.on('message', message => {
@@ -39,6 +55,7 @@ app.get('/data/:formId', (req, res) => {
   res.json(formData[formId] || {});
 });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+// Use httpsServer.listen instead of app.listen for HTTPS
+httpsServer.listen(port, () => {
+  console.log(`HTTPS Server listening at https://localhost:${port}`);
 });

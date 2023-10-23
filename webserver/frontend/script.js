@@ -46,8 +46,13 @@ fetch('/ip.txt')
       });
 
       ws.addEventListener('close', () => {
-        // Reconnect after a delay if connection is closed
         setTimeout(establishWebSocket, 3000);
+      });
+      ws.addEventListener('open', () => {
+        console.log('Connected to WebSocket server');
+      });
+      ws.addEventListener('error', () => {
+        console.log('error');
       });
     }
 

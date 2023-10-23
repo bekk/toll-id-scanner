@@ -2,6 +2,7 @@ import {BackHandler, Linking, Platform} from 'react-native';
 import {ScanResultType} from '@typedefs/ScanResultType';
 
 export const postData = async (data: ScanResultType): Promise<void> => {
+  console.log('process.env.IP_ADDRESS', process.env.IP_ADDRESS);
   try {
     console.log(data);
     await fetch(`http://${process.env.IP_ADDRESS}:8082/data/`, {
