@@ -1,5 +1,5 @@
 import {BackHandler, Linking, Platform} from 'react-native';
-import ScanResultType from '../../types/ScanResultType';
+import {ScanResultType} from '@typedefs/ScanResultType';
 
 export const postData = async (data: ScanResultType): Promise<void> => {
   try {

@@ -2,11 +2,12 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {View, Linking} from 'react-native';
 import {Button, Text} from 'react-native-paper';
 import {ThemeContext} from '../../App';
-import {getFormId} from '../utils/getFormId';
-import {scan} from '../utils/BlinkIdScanner';
-import {ScanResultType} from '../../types/ScanResultType';
-import {postData} from '../services/postData';
-import DataSummary from '../components/UI/DataSummary';
+import {getFormId} from '@utils/getFormId';
+import {scan} from '@utils/BlinkIdScanner';
+
+import {postData} from '@services/postData';
+import DataSummary from '@components/UI/DataSummary';
+import {ScanResultType} from '@typedefs/scanResultType';
 
 const ScannerPage = () => {
   const {buttonVariants, textVariants, centeredContainer, colors} =

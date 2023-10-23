@@ -29,16 +29,12 @@ const Header = () => {
       <View>
         <Text
           style={{
-            ...textVariants?.header.style,
-            textAlign: 'left',
             marginTop: 30,
-          }}>
+          }}
+          {...textVariants?.header}>
           TOLLETATEN
         </Text>
-        <Text
-          style={{...textVariants?.tertiaryHeader.style, textAlign: 'left'}}>
-          ID-Scanner
-        </Text>
+        <Text {...textVariants?.tertiaryHeader}>ID-Scanner</Text>
       </View>
     </View>
   );

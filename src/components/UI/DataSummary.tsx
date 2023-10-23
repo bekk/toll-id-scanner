@@ -1,7 +1,8 @@
 import React, {useContext, FC} from 'react';
 import {Text, View} from 'react-native';
 import {ThemeContext} from '../../../App';
-import {ScanResultType} from '../../../types/scanResultType';
+import {ScanResultType} from '@typedefs/scanResultType';
+import DataField from './DataField';
 
 interface DataProps {
   scanningResults: ScanResultType;
@@ -21,74 +22,41 @@ const DataSummary: FC<DataProps> = ({scanningResults}) => {
         margin: spacing.xl,
       }}>
       <View {...dataSummaryStyles?.infoContainer}>
-        <Text style={textVariants?.secondaryHeader}>Scanning Results:</Text>
+        <Text {...textVariants?.secondaryHeader}>Scanning Results:</Text>
       </View>
-      <View {...dataSummaryStyles?.infoContainer}>
-        <Text style={textVariants?.body}>Last Name:</Text>
-        <Text style={textVariants?.body}>
-          {scanningResults.data.lastName.description}
-        </Text>
-      </View>
-
-      <View {...dataSummaryStyles?.infoContainer}>
-        <Text style={textVariants?.body}>First Name:</Text>
-        <Text style={textVariants?.body}>
-          {scanningResults.data.firstName.description}
-        </Text>
-      </View>
-      <View {...dataSummaryStyles?.infoContainer}>
-        <Text style={textVariants?.body}>Document Number:</Text>
-        <Text style={textVariants?.body}>
-          {scanningResults.data.documentNumber.description}
-        </Text>
-      </View>
-
-      <View {...dataSummaryStyles?.infoContainer}>
-        <Text style={textVariants?.body}>Date of Birth:</Text>
-        <Text style={textVariants?.body}>
-          {`${scanningResults.data.dateOfBirth.day}/${scanningResults.data.dateOfBirth.month}/${scanningResults.data.dateOfBirth.year}`}
-        </Text>
-      </View>
-
-      <View {...dataSummaryStyles?.infoContainer}>
-        <Text style={textVariants?.body}>Gender:</Text>
-        <Text style={textVariants?.body}>
-          {scanningResults.data.sex.description}
-        </Text>
-      </View>
+      <DataField
+        title="Last Name:"
+        data={scanningResults.data.lastName.description}
+      />
+      <DataField
+        title="First Name:"
+        data={scanningResults.data.firstName.description}
+      />
+      <DataField
+        title="Document Number:"
+        data={scanningResults.data.documentNumber.description}
+      />
+      <DataField
+        title="Date of Birth:"
+        data={`${scanningResults.data.dateOfBirth.day}/${scanningResults.data.dateOfBirth.month}/${scanningResults.data.dateOfBirth.year}`}
+      />
+      <DataField title="Gender" data={scanningResults.data.sex.description} />
       {isPassport && (
         <View>
-          <View
-            style={{
-              margin: spacing.s,
-              alignItems: 'center',
-            }}>
-            <Text style={textVariants?.body}>Nationality:</Text>
-            <Text style={textVariants?.body}>
-              {scanningResults.data.nationality.description}
-            </Text>
-          </View>
-          <View
-            style={{
-              margin: spacing.s,
-              alignItems: 'center',
-            }}>
-            <Text style={textVariants?.body}>Document Type:</Text>
-            <Text style={textVariants?.body}>
-              {scanningResults.data.mrzResult.sanitizedDocumentCode[0]}
-            </Text>
-          </View>
-
-          <View
-            style={{
-              margin: spacing.s,
-              alignItems: 'center',
-            }}>
-            <Text style={textVariants?.body}>Issuer:</Text>
-            <Text style={textVariants?.body}>
-              {scanningResults.data.mrzResult.issuer}
-            </Text>
-          </View>
+          <DataField
+            title="Nationality:"
+            data={scanningResults.data.nationality.description}
+            centered
+          />
+          <DataField
+            title="Document Type:"
+            data={scanningResults.data.mrzResult.sanitizedDocumentCode[0]}
+          />
+          <DataField
+            title="Issuer:"
+            data={scanningResults.data.mrzResult.issuer}
+            centered
+          />
         </View>
       )}
     </View>
