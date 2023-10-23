@@ -17,7 +17,7 @@ const ScannerPage = () => {
     null,
   );
   const [formId, setFormId] = useState('');
-
+  console.log('formId', formId);
   const handleScan = useCallback(async () => {
     const scanResult = await scan();
     setScanningResults({formId: formId, data: scanResult[0]});

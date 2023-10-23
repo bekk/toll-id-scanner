@@ -12,19 +12,18 @@ export const postData = async (data: ScanResultType): Promise<void> => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    }).then(response => console.log(response));
+    }).then(response => console.log('response', response));
     if (Platform.OS === 'android') {
       BackHandler.exitApp();
     } else if (Platform.OS === 'ios') {
-      const browserFound = BROWSERS_TO_TRY.some(async browserURL => {
-        if (await Linking.canOpenURL(browserURL)) {
-          Linking.openURL(browserURL);
-          return true;
-        }
-        return false;
-      });
-
-      if (!browserFound) {
+      try {
+        const browserFound = BROWSERS_TO_TRY.some(async browserURL => {
+          const canOpen = await Linking.canOpenURL(browserURL);
+          if (canOpen) {
+            Linking.openURL(browserURL);
+          }
+        });
+      } catch (error) {
         console.log('Please go back to the original window');
       }
     }

@@ -18,20 +18,26 @@ fetch('/ip.txt')
   .then(response => response.text())
   .then(ip => {
     console.log('ip', ip);
-    const ws = new WebSocket(`ws://${ip.trim()}:8083`);
 
+    const ws = new WebSocket(`ws://${ip.trim()}:8083`);
+    ws.onopen = () => {
+      console.log('ws.onopen');
+      ws.send(JSON.stringify({formId}));
+      console.log('ws.send');
+    };
     ws.addEventListener('message', event => {
       const receivedData = JSON.parse(event.data);
-
       if (receivedData.formId === formId) {
         document.getElementById('fetchedData').innerText = JSON.stringify(
           receivedData.data,
+          console.log('receivedData.data', receivedData.data),
         );
       }
     });
 
     async function fetchData(formId) {
       const response = await fetch(`http://${ip.trim()}:8082/data/${formId}`);
+      console.log('response ', response);
       const data = await response.json();
       document.getElementById('fetchedData').innerText = JSON.stringify(data);
     }
