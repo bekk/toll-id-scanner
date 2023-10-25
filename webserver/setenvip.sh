@@ -10,8 +10,8 @@ update_env() {
 
   # Check if IP_ADDRESS exists in the .env file
   if grep -q "IP_ADDRESS=" $env_file; then
-    # Update the .env file
-    sed -i '' "s/IP_ADDRESS=.*/IP_ADDRESS='${IP_ADDRESS}'/" $env_file
+    # Update the .env file with properly escaped newlines
+    sed -i '' "s/IP_ADDRESS=.*/IP_ADDRESS='${IP_ADDRESS//'\'/\\\'\'}'/" $env_file
   else
     # Add IP_ADDRESS to the .env file
     echo "IP_ADDRESS='${IP_ADDRESS}'" >> $env_file
