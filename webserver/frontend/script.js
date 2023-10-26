@@ -22,6 +22,9 @@ fetch('/ip.txt')
 
 // Initialize formId and open the application
 const formId = generateFormId();
+setInterval(() => {
+  fetchData(formId), 1000;
+});
 window.addEventListener('load', () => fetchData(formId));
 window.openApp = function () {
   window.open('toll-id-scanner://main/formId=' + formId, '_blank').focus();
@@ -38,44 +41,8 @@ async function fetchData(formId) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const responseText = await response.text(); // Retrieve the response body as text
-    console.log(
-      'Response:',
-      response.status,
-      response.statusText,
-      '. Data:',
-      responseText,
-    );
     document.getElementById('fetchedData').innerText = responseText;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
-}
-
-let ws; // Declare WebSocket outside of the initializeWebSocket function
-
-// Initialize WebSocket and set up event listeners
-function initializeWebSocket(ip) {
-  ws = new WebSocket(`ws://10.0.20.84:8083`);
-  console.log('WebSocket readyState', ws.readyState);
-
-  ws.addEventListener('open', () => {
-    console.log('WebSocket readyState', ws.readyState);
-    fetchData(formId);
-  });
-
-  ws.addEventListener('message', event => {
-    console.log('WebSocket readyState', ws.readyState);
-    const receivedData = JSON.parse(event.data);
-    //if (receivedData.formId === formId) {
-    document.getElementById('data').innerText = JSON.stringify(
-      receivedData.data,
-    );
-    // }
-  });
-
-  ws.addEventListener('close', () => {
-    console.log('WebSocket readyState', ws.readyState);
-    // Re-establishing the WebSocket is not necessary here
-    // You can remove the recursive call: initializeWebSocket(ip);
-  });
 }
