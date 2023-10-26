@@ -11,38 +11,48 @@ function generateFormId() {
   }
 }
 
-// Fetch the IP address from '/ip.txt' and initialize WebSocket
-fetch('/ip.txt')
-  .then(response => response.text())
-  .then(ip => {
-    console.log('ip', ip);
-    initializeWebSocket(ip);
-  })
-  .catch(error => console.error('Error fetching IP:', error));
+let interval;
 
-// Initialize formId and open the application
-const formId = generateFormId();
-setInterval(() => {
-  fetchData(formId), 1000;
-});
-window.addEventListener('load', () => fetchData(formId));
-window.openApp = function () {
-  window.open('toll-id-scanner://main/formId=' + formId, '_blank').focus();
-};
+async function getIP() {
+  let globalIP = await fetch('/ip.txt')
+    .then(response => response.text())
+    .then(ip => {
+      console.log('ip', ip);
+      return ip;
+    })
+    .catch(error => console.error('Error fetching IP:', error.message));
+  console.log('globalIP', globalIP);
 
-// Fetch data from a URL and update the DOM
-async function fetchData(formId) {
-  console.log('formId', formId);
+  const formId = generateFormId();
+
+  if (!interval) {
+    interval = setInterval(() => {
+      fetchData(formId, globalIP);
+    }, 1000);
+  }
+  window.openApp = function () {
+    window.open('toll-id-scanner://main/formId=' + formId, '_blank').focus();
+  };
+}
+
+async function fetchData(formId, ip) {
+  console.log('fetchData', formId, ip);
+  const dataUrl = `http://${ip.trim()}/data/${formId}`;
+  console.log('Fetching data from:', dataUrl);
   try {
-    const response = await fetch(`http://10.0.20.84:8082/data/${formId}`, {
+    const response = await fetch(`http://${ip.trim()}:8082/data/${formId}`, {
       method: 'GET',
     });
+    console.log('response', response.status);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const responseText = await response.text(); // Retrieve the response body as text
+    console.log('responseText', responseText);
     document.getElementById('fetchedData').innerText = responseText;
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching data:', error.message);
   }
 }
+
+getIP();
