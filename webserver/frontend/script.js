@@ -27,11 +27,6 @@ window.openApp = function () {
   window.open('toll-id-scanner://main/formId=' + formId, '_blank').focus();
 };
 
-// Handle incoming messages
-function handleMessage(event) {
-  document.getElementById('data').innerText = event.data;
-}
-
 // Fetch data from a URL and update the DOM
 async function fetchData(formId) {
   console.log('formId', formId);
@@ -50,8 +45,7 @@ async function fetchData(formId) {
       '. Data:',
       responseText,
     );
-    // const data = await response.json();
-    document.getElementById('fetchedData').innerText = JSON.stringify(data);
+    document.getElementById('fetchedData').innerText = responseText;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -61,7 +55,7 @@ let ws; // Declare WebSocket outside of the initializeWebSocket function
 
 // Initialize WebSocket and set up event listeners
 function initializeWebSocket(ip) {
-  ws = new WebSocket(`ws://${ip.trim()}:8083`);
+  ws = new WebSocket(`ws://10.0.20.84:8083`);
   console.log('WebSocket readyState', ws.readyState);
 
   ws.addEventListener('open', () => {
@@ -72,11 +66,11 @@ function initializeWebSocket(ip) {
   ws.addEventListener('message', event => {
     console.log('WebSocket readyState', ws.readyState);
     const receivedData = JSON.parse(event.data);
-    if (receivedData.formId === formId) {
-      document.getElementById('fetchedData').innerText = JSON.stringify(
-        receivedData.data,
-      );
-    }
+    //if (receivedData.formId === formId) {
+    document.getElementById('data').innerText = JSON.stringify(
+      receivedData.data,
+    );
+    // }
   });
 
   ws.addEventListener('close', () => {

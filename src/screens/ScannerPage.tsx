@@ -21,7 +21,7 @@ const ScannerPage = () => {
     const scanResult = await scan();
     setScanningResults({formId: formId, data: scanResult[0]});
   }, [formId]);
-
+  console.log('formId scannerpage', formId);
   useEffect(() => {
     const unsubscribe = Linking.addEventListener('url', getFormId(setFormId));
 
