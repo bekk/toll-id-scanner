@@ -33,6 +33,10 @@ fetch('/ip.txt')
     }
 
     fetchData(formId);
+    setInterval(() => {
+      console.log('This happens too often');
+      fetchData(formId);
+    }, 1000);
 
     function establishWebSocket() {
       ws = new WebSocket(`ws://${ip.trim()}:8083`);

@@ -7,43 +7,46 @@
   </head>
 
   <body>
-    <h1>Welcome</h1>
+    <div class="form-container">
+      <h1>TOLLETATEN</h1>
 
-    <form id="simpleForm">
-      <!-- Personal Data Inputs -->
-      <div>
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required />
-      </div>
+      <form id="simpleForm">
+        <div class="form-group">
+          <label for="firstName">Fornavn:</label>
+          <input type="text" id="firstName" name="firstName" required />
+        </div>
 
-      <div>
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" name="lastName" required />
-      </div>
+        <div class="form-group">
+          <label for="lastName">Etternavn:</label>
+          <input type="text" id="lastName" name="lastName" required />
+        </div>
 
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required />
-      </div>
+        <div class="form-group">
+          <label for="documentNr">Dokument Nr:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
 
-      <div>
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone" />
-      </div>
+        <div class="form-group">
+          <label for="gender">Kjønn:</label>
+          <input type="tel" id="phone" name="phone" />
+        </div>
 
-      <div>
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob" />
-      </div>
+        <div class="form-group">
+          <label for="dob">Fødselsdato:</label>
+          <input type="date" id="dob" name="dob" />
+        </div>
 
-      <!-- Existing form elements -->
-      <input type="button" value="Open My App" onclick="openApp()" />
-    </form>
+        <div class="form-group">
+          <label for="nationality">Nasjonalitet:</label>
+          <input type="tel" id="phone" name="phone" />
+        </div>
 
-    <!-- Element to display data from the app -->
+        <input type="button" value="Scan ID" onclick="openApp()" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+
     <div id="data"></div>
-
-    <!-- Element to display fetched data -->
     <div id="fetchedData"></div>
   </body>
 </html>

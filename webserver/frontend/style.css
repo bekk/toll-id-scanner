@@ -1,69 +1,85 @@
-/* Base styles (Mobile-first) */
 body {
-  font-size: 24px;
-  background-color: bisque;
+  font-size: 18px;
+  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif; /* You can choose any other font-family if you prefer */
+  font-family: Arial, sans-serif;
+}
+
+.form-container {
+  background-color: #fff;
+  margin: 40px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
 form {
-  margin: 20px;
   display: flex;
   flex-direction: column;
 }
 
-label,
-input[type='tel'],
-input[type='date'] {
-  margin-bottom: 20px;
-  font-size: 24px;
+.form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 20px;
+  margin-bottom: 8px;
 }
 
 input[type='text'],
 input[type='email'],
 input[type='tel'],
 input[type='date'],
-input[type='button'] {
-  font-size: 24px;
-  padding: 10px 15px; /* Added a bit more padding for touch-friendly interactions */
-  width: 100%; /* Form elements take the full width */
-  box-sizing: border-box; /* Ensure padding doesn't increase element width */
+input[type='button'],
+input[type='submit'] {
+  font-size: 18px;
+  padding: 12px 16px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 input[type='button'] {
-  background-color: #4caf50; /* A green shade for the button */
-  color: white; /* Text color for the button */
-  border: none; /* Removing default borders */
-  cursor: pointer; /* Hand cursor on hover */
-  border-radius: 5px; /* Rounded corners */
+  background-color: #eee;
+  color: #333;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+input[type='submit'] {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  height: 50px;
 }
 
 input[type='button']:hover {
-  background-color: #45a049; /* Slightly darker shade on hover */
+  background-color: #d4d4d4;
 }
 
-/* Adjustments for larger screens */
-@media (min-width: 768px) {
-  /* Tablet and above */
-  body {
-    font-size: 20px;
-  }
+input[type='submit']:hover {
+  background-color: #45a049;
+}
 
-  label,
-  input[type='tel'],
-  input[type='date'] {
-    margin-bottom: 15px;
+@media (min-width: 768px) {
+  .form-container {
+    max-width: 500px;
+    margin: 40px auto;
   }
 
   input[type='text'],
   input[type='email'],
   input[type='tel'],
   input[type='date'],
-  input[type='button'] {
+  input[type='button'],
+  input[type='submit'] {
     font-size: 20px;
-    padding: 8px 12px;
-    width: 60%; /* Form elements take 60% width on larger screens */
-    margin: 0 auto; /* Centering form elements */
   }
 }
