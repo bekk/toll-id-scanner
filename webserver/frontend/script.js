@@ -22,7 +22,7 @@ fetch('/ip.txt')
 
 // Initialize formId and open the application
 const formId = generateFormId();
-window.addEventListener('load', () => fetchData(formId, ip));
+window.addEventListener('load', () => fetchData(formId));
 window.openApp = function () {
   window.open('toll-id-scanner://main/formId=' + formId, '_blank').focus();
 };
@@ -33,10 +33,10 @@ function handleMessage(event) {
 }
 
 // Fetch data from a URL and update the DOM
-async function fetchData(formId, ip) {
+async function fetchData(formId) {
   console.log('formId', formId);
   try {
-    const response = await fetch(`http://${ip.trim()}:8082/data/${formId}`, {
+    const response = await fetch(`http://10.0.20.84:8082/data/${formId}`, {
       method: 'GET',
     });
     if (!response.ok) {
@@ -66,7 +66,7 @@ function initializeWebSocket(ip) {
 
   ws.addEventListener('open', () => {
     console.log('WebSocket readyState', ws.readyState);
-    fetchData(formId, ip);
+    fetchData(formId);
   });
 
   ws.addEventListener('message', event => {
