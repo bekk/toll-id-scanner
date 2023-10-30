@@ -7,6 +7,14 @@ const port = 3000;
 
 let formData = {};
 
+const wss = new WebSocket.Server({port: 8083});
+
+wss.on('connection', ws => {
+  ws.on('message', message => {
+    console.log('received:', message);
+  });
+});
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -15,6 +23,13 @@ app.use(express.static(__dirname));
 app.post('/data', (req, res) => {
   const {formId, data} = req.body;
   formData[formId] = data;
+
+  wss.clients.forEach(client => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({formId, data: formData[formId]}));
+    }
+  });
+
   res.send('Data received');
 });
 

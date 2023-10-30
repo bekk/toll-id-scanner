@@ -17,11 +17,9 @@ async function getIP() {
   let globalIP = await fetch('/ip.txt')
     .then(response => response.text())
     .then(ip => {
-      console.log('ip', ip);
       return ip;
     })
     .catch(error => console.error('Error fetching IP:', error.message));
-  console.log('globalIP', globalIP);
 
   const formId = generateFormId();
 
@@ -36,19 +34,14 @@ async function getIP() {
 }
 
 async function fetchData(formId, ip) {
-  console.log('fetchData', formId, ip);
-  const dataUrl = `http://${ip.trim()}/data/${formId}`;
-  console.log('Fetching data from:', dataUrl);
   try {
     const response = await fetch(`http://${ip.trim()}:8082/data/${formId}`, {
       method: 'GET',
     });
-    console.log('response', response.status);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const responseText = await response.text(); // Retrieve the response body as text
-    console.log('responseText', responseText);
     document.getElementById('fetchedData').innerText = responseText;
   } catch (error) {
     console.error('Error fetching data:', error.message);
