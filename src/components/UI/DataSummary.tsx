@@ -1,60 +1,47 @@
 import React, {useContext, FC} from 'react';
 import {Text, View} from 'react-native';
 import {ThemeContext} from '../../../App';
-import {ScanResultType} from '@typedefs/scanResultType';
 import DataField from './DataField';
+import {FormattedScanningResults} from '@utils/formatScanningResults';
 
 interface DataProps {
-  scanningResults: ScanResultType;
+  scanningResults: FormattedScanningResults;
 }
 
 const DataSummary: FC<DataProps> = ({scanningResults}) => {
   const {spacing, textVariants, dataSummaryStyles} = useContext(ThemeContext);
-  const isPassport =
-    scanningResults &&
-    scanningResults.data.mrzResult.sanitizedDocumentCode[0] === 'P'
-      ? true
-      : false;
+
+  // With the updated FormattedScanningResults, this check might need to be updated based on your logic
+  const isPassport = scanningResults.documentType === 'P';
 
   return (
-    <View
-      style={{
-        margin: spacing.xl,
-      }}>
+    <View style={{margin: spacing.xl}}>
       <View {...dataSummaryStyles?.infoContainer}>
         <Text {...textVariants?.secondaryHeader}>Scanning Results:</Text>
       </View>
-      <DataField
-        title="Last Name:"
-        data={scanningResults.data.lastName.description}
-      />
-      <DataField
-        title="First Name:"
-        data={scanningResults.data.firstName.description}
-      />
+      <DataField title="Last Name:" data={scanningResults.lastName} />
+      <DataField title="First Name:" data={scanningResults.firstName} />
       <DataField
         title="Document Number:"
-        data={scanningResults.data.documentNumber.description}
+        data={scanningResults.documentNumber}
       />
-      <DataField
-        title="Date of Birth:"
-        data={`${scanningResults.data.dateOfBirth.day}/${scanningResults.data.dateOfBirth.month}/${scanningResults.data.dateOfBirth.year}`}
-      />
-      <DataField title="Gender" data={scanningResults.data.sex.description} />
+      <DataField title="Date of Birth:" data={scanningResults.dateOfBirth} />
+      <DataField title="Gender" data={scanningResults.gender} />
+
       {isPassport && (
         <View>
           <DataField
             title="Nationality:"
-            data={scanningResults.data.nationality.description}
+            data={scanningResults.nationality || 'N/A'}
             centered
           />
           <DataField
             title="Document Type:"
-            data={scanningResults.data.mrzResult.sanitizedDocumentCode[0]}
+            data={scanningResults.documentType || 'N/A'}
           />
           <DataField
             title="Issuer:"
-            data={scanningResults.data.mrzResult.issuer}
+            data={scanningResults.issuer || 'N/A'}
             centered
           />
         </View>

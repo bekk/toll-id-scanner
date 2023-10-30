@@ -1,9 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const WebSocket = require('ws');
-const https = require('https');
-const fs = require('fs');
 
 const app = express();
 const port = 3000;
@@ -27,6 +24,6 @@ app.get('/data/:formId', (req, res) => {
 });
 
 // Use httpsServer.listen instead of app.listen for HTTPS
-httpsServer.listen(port, () => {
+app.listen(port, () => {
   console.log(`HTTPS Server listening at https://localhost:${port}`);
 });
