@@ -8,6 +8,7 @@ import {scan} from '@utils/BlinkIdScanner';
 import {postData} from '@services/postData';
 import DataSummary from '@components/UI/DataSummary';
 import {ScanResultType} from '@typedefs/scanResultType';
+import {formatScanningResults} from '@utils/formatScanningResults';
 
 const ScannerPage = () => {
   const {buttonVariants, textVariants, centeredContainer, colors} =
@@ -65,7 +66,9 @@ const ScannerPage = () => {
         )
       ) : (
         <View>
-          <DataSummary scanningResults={scanningResults} />
+          <DataSummary
+            scanningResults={formatScanningResults(scanningResults)}
+          />
           <View style={centeredContainer}>
             <Button
               {...buttonVariants?.primaryButton}

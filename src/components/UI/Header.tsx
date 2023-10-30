@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
-import {Text, View, Image} from 'react-native';
+import {View, Image} from 'react-native';
+import {Text} from 'react-native-paper';
 import {theme} from '@styles/themes';
 
 export const ThemeContext = React.createContext(theme);
@@ -12,7 +13,7 @@ const Header = () => {
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop: 15,
+        marginTop: 5,
         marginBottom: 30,
         marginHorizontal: 20,
       }}>
@@ -26,14 +27,8 @@ const Header = () => {
         }}
         width={50}
       />
-      <View>
-        <Text
-          style={{
-            marginTop: 30,
-          }}
-          {...textVariants?.header}>
-          TOLLETATEN
-        </Text>
+      <View style={{marginTop: 30}}>
+        <Text {...textVariants?.header}>TOLLETATEN</Text>
         <Text {...textVariants?.tertiaryHeader}>ID-Scanner</Text>
       </View>
     </View>
