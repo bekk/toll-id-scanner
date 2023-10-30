@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Simple Web Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="script.js" defer></script>
   </head>
@@ -14,31 +15,49 @@
         <div class="form-group">
           <label for="firstName">Fornavn:</label>
           <input type="text" id="firstName" name="firstName" required />
+          <div id="firstNameWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
         </div>
 
         <div class="form-group">
           <label for="lastName">Etternavn:</label>
           <input type="text" id="lastName" name="lastName" required />
+          <div id="lastNameWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
         </div>
 
         <div class="form-group">
           <label for="documentNr">Dokument Nr:</label>
-          <input type="email" id="email" name="email" required />
+          <input type="text" id="docNr" name="docNr" required />
+          <div id="docNrWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
         </div>
 
         <div class="form-group">
           <label for="gender">Kjønn:</label>
-          <input type="tel" id="phone" name="phone" />
+          <input type="text" id="gender" name="gender" />
+          <div id="genderWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
         </div>
 
         <div class="form-group">
           <label for="dob">Fødselsdato:</label>
           <input type="date" id="dob" name="dob" />
+          <div id="dobWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
         </div>
 
         <div class="form-group">
           <label for="nationality">Nasjonalitet:</label>
-          <input type="tel" id="phone" name="phone" />
+          <input type="text" id="nationality" name="nationality" />
+          <div id="nationalityWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
         </div>
 
         <input type="button" value="Scan ID" onclick="openApp()" />

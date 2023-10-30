@@ -3,6 +3,7 @@ import {ScanResultType} from '@typedefs/ScanResultType';
 import {formatScanningResults} from '@utils/formatScanningResults';
 
 export const postData = async (data: ScanResultType): Promise<void> => {
+  console.log(`http://${process.env.IP_ADDRESS}:8082/data/`);
   try {
     const BROWSERS_TO_TRY = ['googlechrome://', 'firefox://', 'safari://'];
     await fetch(`http://${process.env.IP_ADDRESS}:8082/data/`, {
@@ -10,7 +11,10 @@ export const postData = async (data: ScanResultType): Promise<void> => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formatScanningResults(data)),
+      body: JSON.stringify({
+        formId: data.formId,
+        data: formatScanningResults(data),
+      }),
     }).then(response => console.log('Post response:', response.status));
     if (Platform.OS === 'android') {
       BackHandler.exitApp();
