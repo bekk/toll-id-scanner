@@ -22,7 +22,7 @@ export async function scan() {
       BlinkIDReactNative.RecognizerResultState.valid
         ? scanningResults
         : null;
-
+    console.log(scanningResults);
     return isValid;
   } catch (error) {
     console.error('Scanning failed', error);

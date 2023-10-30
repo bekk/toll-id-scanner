@@ -11,6 +11,16 @@ export type FormattedScanningResults = {
   issuer: string | null;
 };
 
+function getNationality(obj: ScanResultType) {
+  if (obj.data.nationality && obj.data.nationality.description) {
+    return obj.data.nationality.description;
+  }
+  if (obj.data.mrzResult && obj.data.mrzResult.nationality) {
+    return obj.data.mrzResult.nationality;
+  }
+  return null;
+}
+
 export const formatScanningResults = (
   scanningResults: ScanResultType,
 ): FormattedScanningResults => {
@@ -24,9 +34,7 @@ export const formatScanningResults = (
     documentNumber: scanningResults.data.documentNumber.description,
     dateOfBirth: `${scanningResults.data.dateOfBirth.day}/${scanningResults.data.dateOfBirth.month}/${scanningResults.data.dateOfBirth.year}`,
     gender: scanningResults.data.sex.description,
-    nationality: isPassport
-      ? scanningResults.data.nationality.description
-      : null,
+    nationality: getNationality(scanningResults),
     documentType: isPassport
       ? scanningResults.data.mrzResult.sanitizedDocumentCode[0]
       : null,

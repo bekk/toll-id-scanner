@@ -3,7 +3,6 @@ import {ScanResultType} from '@typedefs/ScanResultType';
 import {formatScanningResults} from '@utils/formatScanningResults';
 
 export const postData = async (data: ScanResultType): Promise<void> => {
-  console.log(`http://${process.env.IP_ADDRESS}:8082/data/`);
   try {
     const BROWSERS_TO_TRY = ['googlechrome://', 'firefox://', 'safari://'];
     await fetch(`http://${process.env.IP_ADDRESS}:8082/data/`, {
