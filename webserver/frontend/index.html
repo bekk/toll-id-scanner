@@ -2,24 +2,70 @@
 <html>
   <head>
     <title>Simple Web Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="style.css" />
     <script src="script.js" defer></script>
   </head>
 
   <body>
-    <h1>Welcome</h1>
+    <div class="form-container">
+      <h1>TOLLETATEN</h1>
 
-    <form id="simpleForm">
-      <!-- Existing form elements -->
-      <input type="button" value="Open My App" onclick="openApp()" />
-    </form>
+      <form id="simpleForm">
+        <div class="form-group">
+          <label for="firstName">Fornavn:</label>
+          <input type="text" id="firstName" name="firstName" required />
+          <div id="firstNameWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
+        </div>
 
-    <!-- Element to display data from the app -->
-    <p>DATA</p>
+        <div class="form-group">
+          <label for="lastName">Etternavn:</label>
+          <input type="text" id="lastName" name="lastName" required />
+          <div id="lastNameWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="documentNr">Dokument Nr:</label>
+          <input type="text" id="docNr" name="docNr" required />
+          <div id="docNrWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="gender">Kjønn:</label>
+          <input type="text" id="gender" name="gender" />
+          <div id="genderWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="dob">Fødselsdato:</label>
+          <input type="date" id="dob" name="dob" />
+          <div id="dobWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="nationality">Nasjonalitet:</label>
+          <input type="text" id="nationality" name="nationality" />
+          <div id="nationalityWarning" style="display: none; color: #ffcc05">
+            Manually overridden!
+          </div>
+        </div>
+
+        <input type="button" value="Scan ID" onclick="openApp()" />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+
     <div id="data"></div>
-
-    <!-- Element to display fetched data -->
-    <p>FETCHED DATA</p>
     <div id="fetchedData"></div>
   </body>
 </html>

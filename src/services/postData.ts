@@ -1,5 +1,6 @@
 import {BackHandler, Linking, Platform} from 'react-native';
 import {ScanResultType} from '@typedefs/ScanResultType';
+import {formatScanningResults} from '@utils/formatScanningResults';
 
 export const postData = async (data: ScanResultType): Promise<void> => {
   try {
@@ -9,7 +10,10 @@ export const postData = async (data: ScanResultType): Promise<void> => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        formId: data.formId,
+        data: formatScanningResults(data),
+      }),
     }).then(response => console.log('Post response:', response.status));
     if (Platform.OS === 'android') {
       BackHandler.exitApp();
