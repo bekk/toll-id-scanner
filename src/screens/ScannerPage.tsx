@@ -20,7 +20,7 @@ const ScannerPage = () => {
   const [formId, setFormId] = useState('');
   const handleScan = useCallback(async () => {
     const scanResult = await scan();
-    setScanningResults({formId: formId, data: scanResult[0]});
+    scanResult && setScanningResults({formId: formId, data: scanResult[0]});
   }, [formId]);
   useEffect(() => {
     const unsubscribe = Linking.addEventListener('url', getFormId(setFormId));
