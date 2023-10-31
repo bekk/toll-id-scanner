@@ -11,7 +11,6 @@ interface DataProps {
 const DataSummary: FC<DataProps> = ({scanningResults}) => {
   const {spacing, textVariants, dataSummaryStyles} = useContext(ThemeContext);
 
-  // With the updated FormattedScanningResults, this check might need to be updated based on your logic
   const isPassport = scanningResults.documentType === 'P';
 
   return (

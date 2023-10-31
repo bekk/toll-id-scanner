@@ -1,4 +1,3 @@
-// Flags for manual overrides
 let manualOverrides = {
   firstName: false,
   lastName: false,
@@ -8,7 +7,6 @@ let manualOverrides = {
   nationality: false,
 };
 
-// Event listeners for each input field to detect manual changes
 document.querySelectorAll('input').forEach(input => {
   input.addEventListener('input', function () {
     const warningDiv = document.getElementById(input.id + 'Warning');
@@ -75,7 +73,6 @@ async function fetchData(formId, ip) {
     }
     const responseData = await response.json();
 
-    // Define the fields we want to update
     const fields = {
       firstName: responseData.firstName,
       lastName: responseData.lastName,
@@ -91,12 +88,11 @@ async function fetchData(formId, ip) {
       fields.dob = `${year}-${formattedMonth}-${formattedDay}`;
     }
 
-    // Loop over each field and update its value and defaultValue
     Object.entries(fields).forEach(([field, value]) => {
       if (!manualOverrides[field]) {
         const inputElem = document.getElementById(field);
         inputElem.value = value || '';
-        inputElem.defaultValue = value || ''; // Update the defaultValue
+        inputElem.defaultValue = value || '';
       }
     });
   } catch (error) {
