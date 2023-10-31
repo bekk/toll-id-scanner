@@ -1,7 +1,6 @@
 import {ANDROID_LICENSE_KEY, IOS_LICENSE_KEY} from '@env';
 import * as BlinkIDReactNative from 'blinkid-react-native';
 import {Alert, Platform} from 'react-native';
-import {Button} from 'react-native-paper';
 
 const licenseKey = Platform.select({
   ios: IOS_LICENSE_KEY,
@@ -29,16 +28,16 @@ export async function scan() {
       return scanningResults;
     } else {
       const retry = await new Promise(resolve => {
-        Alert.alert('No data found', 'Please try again', [
+        Alert.alert('Ingen data funnet', 'Vennligst prøv igjen', [
           {
-            text: 'Try again',
+            text: 'Prøv igjen',
             onPress: () => {
               resolve(true);
             },
             style: 'cancel',
           },
           {
-            text: 'Cancel',
+            text: 'Avbryt',
             onPress: () => {
               resolve(false);
             },
