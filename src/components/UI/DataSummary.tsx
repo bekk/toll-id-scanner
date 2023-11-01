@@ -17,30 +17,30 @@ const DataSummary: FC<DataProps> = ({scanningResults}) => {
   return (
     <View style={{margin: spacing.xl}}>
       <View {...dataSummaryStyles?.infoContainer}>
-        <Text {...textVariants?.secondaryHeader}>Scanning Results:</Text>
+        <Text {...textVariants?.secondaryHeader}>Resultater av scanning:</Text>
       </View>
-      <DataField title="Last Name:" data={scanningResults.lastName} />
-      <DataField title="First Name:" data={scanningResults.firstName} />
+      <DataField title="Etternavn:" data={scanningResults.lastName} />
+      <DataField title="Fornavn:" data={scanningResults.firstName} />
       <DataField
-        title="Document Number:"
+        title="Dokument Nummer:"
         data={scanningResults.documentNumber}
       />
-      <DataField title="Date of Birth:" data={scanningResults.dateOfBirth} />
-      <DataField title="Gender" data={scanningResults.gender} />
+      <DataField title="Født:" data={scanningResults.dateOfBirth} />
+      <DataField title="Kjønn" data={scanningResults.gender} />
 
       {isPassport && (
         <View>
           <DataField
-            title="Nationality:"
+            title="Nasjonalitet:"
             data={scanningResults.nationality || 'N/A'}
             centered
           />
           <DataField
-            title="Document Type:"
+            title="Dokument Type:"
             data={scanningResults.documentType || 'N/A'}
           />
           <DataField
-            title="Issuer:"
+            title="Utsteder:"
             data={scanningResults.issuer || 'N/A'}
             centered
           />
