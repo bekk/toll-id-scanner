@@ -2,13 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const WebSocket = require('ws');
+const http = require('http');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 8080;
+const server = http.createServer(app);
 
 let formData = {};
 
-const wss = new WebSocket.Server({port: 8083});
+const wss = new WebSocket.Server({server});
 
 wss.on('connection', ws => {
   ws.on('message', message => {
@@ -39,6 +41,6 @@ app.get('/data/:formId', (req, res) => {
   res.json(formData[formId] || {});
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
 });

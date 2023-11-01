@@ -5,7 +5,7 @@ import {formatScanningResults} from '@utils/formatScanningResults';
 export const postData = async (data: ScanResultType): Promise<void> => {
   try {
     const BROWSERS_TO_TRY = ['googlechrome://', 'firefox://', 'safari://'];
-    await fetch(`http://${process.env.IP_ADDRESS}:8082/data/`, {
+    await fetch('https://backend-dw3l6asybq-ew.a.run.app/data/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

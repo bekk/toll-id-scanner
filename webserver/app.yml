@@ -1,0 +1,12 @@
+runtime: php55
+api_version: 1
+threadsafe: true
+
+handlers:
+  - url: /
+    static_files: fronted/index.html
+    upload: frontend/index.html
+
+  - url: /(.*)
+    static_files: frontend/\1
+    upload: frontend/(.*)

@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Expose ports
-EXPOSE 3000
-EXPOSE 8083
+# TODO: Make this use environment variables
+EXPOSE 8080
 
 CMD [ "node", "server.js" ]
