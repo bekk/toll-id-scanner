@@ -60,8 +60,8 @@ const ScannerPage = () => {
           </>
         ) : (
           <Text {...textVariants?.body} style={{marginHorizontal: 30}}>
-            Kan ikke finne formId. Åpne appen ved å bruke "skann ID"-knappen i
-            skjemaet for å begynne å skanne dokumenter.
+            Finner ikke tilknyttet skjema. Åpne appen ved å bruke "skann
+            ID"-knappen i skjemaet for å begynne å skanne dokumenter.
           </Text>
         )
       ) : (
