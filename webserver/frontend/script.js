@@ -1,3 +1,4 @@
+console.log('Script started');
 // Flags for manual overrides
 let manualOverrides = {
   firstName: false,
@@ -7,6 +8,9 @@ let manualOverrides = {
   dob: false,
   nationality: false,
 };
+
+const backendUrl = 'https://backend-dw3l6asybq-ew.a.run.app';
+const formId = generateFormId();
 
 // Event listeners for each input field to detect manual changes
 document.querySelectorAll('input').forEach(input => {
@@ -37,24 +41,13 @@ function generateFormId() {
 
 let interval;
 
-async function getIP() {
-  let globalIP = await fetch('/ip.txt')
-    .then(response => response.text())
-    .then(ip => {
-      return ip;
-    })
-    .catch(error => console.error('Error fetching IP:', error.message));
-
-  const formId = generateFormId();
-
-  if (!interval) {
-    interval = setInterval(() => {
-      fetchData(formId, globalIP);
-    }, 1000);
-  }
-  window.openApp = function () {
-    window.open('toll-id-scanner://main/formId=' + formId, '_blank').focus();
-  };
+if (!interval) {
+  interval = setInterval(() => {
+    fetchData(formId, backendUrl);
+  }, 1000);
+}
+function openApp() {
+  window.open('toll-id-scanner://main/formId=' + formId, '_blank').focus();
 }
 
 function resetField(fieldId) {
@@ -67,9 +60,10 @@ function resetField(fieldId) {
 
 async function fetchData(formId, ip) {
   try {
-    const response = await fetch(`http://${ip.trim()}:8082/data/${formId}`, {
+    const response = await fetch(`${backendUrl}/data/${formId}`, {
       method: 'GET',
     });
+
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -103,5 +97,3 @@ async function fetchData(formId, ip) {
     console.error('Error fetching data:', error.message);
   }
 }
-
-getIP();

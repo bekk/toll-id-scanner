@@ -29,7 +29,7 @@ const Header = () => {
       />
       <View style={{marginTop: 30}}>
         <Text {...textVariants?.header}>TOLLETATEN</Text>
-        <Text {...textVariants?.tertiaryHeader}>ID-Scanner</Text>
+        <Text {...textVariants?.tertiaryHeader}>ID-Skanner</Text>
       </View>
     </View>
   );

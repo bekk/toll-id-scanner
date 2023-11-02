@@ -60,8 +60,8 @@ const ScannerPage = () => {
           </>
         ) : (
           <Text {...textVariants?.body} style={{marginHorizontal: 30}}>
-            Can't find formId. Open the app using the "scan ID" button in the
-            form to start scanning documents.
+            Finner ikke tilknyttet skjema. Åpne appen ved å bruke "skann
+            ID"-knappen i skjemaet for å begynne å skanne dokumenter.
           </Text>
         )
       ) : (
@@ -76,13 +76,13 @@ const ScannerPage = () => {
               onPress={() =>
                 postData(scanningResults).then(() => setFormId(''))
               }>
-              Confirm
+              Godkjenn
             </Button>
             <Button
               {...buttonVariants?.primaryButton}
               buttonColor={colors.failure}
               onPress={handleScan}>
-              Scan Again
+              Skann Igjen
             </Button>
           </View>
         </View>
